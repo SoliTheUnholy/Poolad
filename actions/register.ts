@@ -14,8 +14,8 @@ export const register = async (values: any) => {
         error: "Email already exists",
       };
     }
-    const usernamw = await User.findOne({ username });
-    if (userFound) {
+    const Euser = await User.findOne({ username });
+    if (Euser) {
       return {
         error: "Username is not available",
       };
