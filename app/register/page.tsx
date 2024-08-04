@@ -45,7 +45,7 @@ export default function Register() {
     }
   };
   return (
-    <div className="flex h-screen w-full items-center justify-center py-12">
+    <div className="flex h-[100svh] w-full items-center justify-center py-12">
       <Card className="absolute mx-auto max-w-sm">
         <CardHeader>
           <CardTitle className="text-xl">Sign Up</CardTitle>
