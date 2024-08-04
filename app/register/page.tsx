@@ -17,6 +17,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Register() {
   const [error, setError] = useState<string>();
@@ -24,17 +31,17 @@ export default function Register() {
   const ref = useRef<HTMLFormElement>(null);
   const handleSubmit = async (formData: FormData) => {
     const r = await register({
+      username: formData.get("username"),
       email: formData.get("email"),
       password: formData.get("password"),
-      name: formData.get("name"),
-      fname: formData.get("name"),
+      occupation: formData.get("occupation"),
     });
     ref.current?.reset();
     if (r?.error) {
       setError(r.error);
       return;
     } else {
-      return router.push("/login");
+      return router.push(`/login`);
     }
   };
   return (
@@ -53,20 +60,15 @@ export default function Register() {
                 {error}
               </div>
             )}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="grid gap-2">
-                <Label htmlFor="first-name">First name</Label>
-                <Input name="name" placeholder="Max" required />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="last-name">Last name</Label>
-                <Input name="fname" placeholder="Robinson" required />
-              </div>
+            <div className="grid gap-2">
+              <Label htmlFor="username">Username</Label>
+              <Input name="username" id="username" placeholder="Max45" required />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 name="email"
+                id="email"
                 type="email"
                 placeholder="m@example.com"
                 required
@@ -74,7 +76,19 @@ export default function Register() {
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
-              <Input name="password" type="password" />
+              <Input required name="password" id="password" type="password" />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="occupation">Occupation</Label>
+              <Select name="occupation" required>
+                <SelectTrigger id="occupation">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="teacher">Teacher</SelectItem>
+                  <SelectItem value="student">Student</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <Button type="submit" className="w-full">
               Create an account

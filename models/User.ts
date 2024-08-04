@@ -1,14 +1,17 @@
 import mongoose, { Schema, model } from "mongoose";
+
 export interface UserDocument {
   _id: string;
   email: string;
   password: string;
+  username: string;
   name: string;
   fname: string;
   phone: string;
   image: string;
   createdAt: Date;
   updatedAt: Date;
+  occupation: "teacher" | "student";
 }
 
 const UserSchema = new Schema<UserDocument>(
@@ -22,17 +25,14 @@ const UserSchema = new Schema<UserDocument>(
         "Email is invalid",
       ],
     },
+    username: {
+      type: String,
+      unique: true,
+      required: [true, "First name is required"],
+    },
     password: {
       type: String,
       required: true,
-    },
-    name: {
-      type: String,
-      required: [true, "Name is required"],
-    },
-    fname: {
-      type: String,
-      required: [true, "Name is required"],
     },
   },
   {
@@ -40,5 +40,6 @@ const UserSchema = new Schema<UserDocument>(
   },
 );
 
-const User = mongoose.models?.User || model<UserDocument>("User", UserSchema);
+const User =
+  mongoose.models?.User || model<UserDocument>("User", UserSchema, "User");
 export default User;
