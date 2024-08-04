@@ -35,11 +35,11 @@ export default function Login() {
         className="flex h-[100svh] items-center justify-center px-6 py-12"
         onSubmit={handleSubmit}
       >
-        <div className="mx-auto grid w-[350px] gap-6">
+        <div className="mx-auto grid w-80 gap-6">
           <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Login</h1>
+            <h1 className="text-3xl font-bold">ورود به حساب</h1>
             <p className="text-balance text-muted-foreground">
-              Enter your email below to login to your account
+              شماره تلفن و رمز ورود خود را وارد کنید{" "}
             </p>
           </div>
           <div className="grid gap-4">
@@ -49,37 +49,37 @@ export default function Login() {
               </div>
             )}
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="number">شماره تلفن</Label>
               <Input
-                name="email"
-                type="email"
-                placeholder="m@example.com"
+                name="number"
+                type="number"
+                placeholder="09012345678"
                 required
               />
             </div>
             <div className="grid gap-2">
-              <div className="flex items-center">
-                <Label htmlFor="password">Password</Label>
+              <div className="flex justify-between">
+                <Label htmlFor="password">رمز</Label>
                 <Link
                   href="/forgot-password"
-                  className="ml-auto inline-block text-sm underline"
+                  className="text-sm underline"
                 >
-                  Forgot your password?
+                  رمز خود را فراموش کرده اید؟{" "}
                 </Link>
               </div>
               <Input name="password" type="password" required />
             </div>
             <Button type="submit" className="w-full">
-              Login
+              ورود
             </Button>
             <Button variant="outline" className="w-full">
-              Login with Google
+              ورود با رمز یکبار مصرف
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Link href="/register" className="underline">
-              Sign up
+            حساب کاربری ندارید ؟
+            <Link href="/register" className="text-primary underline">
+              ثبت نام
             </Link>
           </div>
         </div>

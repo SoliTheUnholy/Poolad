@@ -30,49 +30,51 @@ export default function Dashboard() {
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
         <Card x-chunk="dashboard-01-chunk-0">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">مبلغ فروش</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">$45,231.89</div>
+            <div className="text-2xl font-bold">45,237,000</div>
             <p className="text-xs text-muted-foreground">
-              +20.1% from last month
+              +20.1% نسبت به ماه گذشته
             </p>
           </CardContent>
         </Card>
         <Card x-chunk="dashboard-01-chunk-1">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
+            <CardTitle className="text-sm font-medium">مشتریان</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+2350</div>
+            <div className="text-2xl font-bold">2350</div>
             <p className="text-xs text-muted-foreground">
-              +180.1% from last month
+              +180.1% نسبت به ماه گذشته
             </p>
           </CardContent>
         </Card>
         <Card x-chunk="dashboard-01-chunk-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sales</CardTitle>
+            <CardTitle className="text-sm font-medium">تعداد فروش</CardTitle>
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+12,234</div>
+            <div className="text-2xl font-bold">12,234</div>
             <p className="text-xs text-muted-foreground">
-              +19% from last month
+              +19% نسبت به ماه گذشته
             </p>
           </CardContent>
         </Card>
         <Card x-chunk="dashboard-01-chunk-3">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Now</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              سفارشات در حال انجام
+            </CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">+573</div>
+            <div className="text-2xl font-bold">573</div>
             <p className="text-xs text-muted-foreground">
-              +201 since last hour
+              +17% نسبت به ماه گذشته
             </p>
           </CardContent>
         </Card>
@@ -81,14 +83,12 @@ export default function Dashboard() {
         <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
           <CardHeader className="flex flex-row items-center">
             <div className="grid gap-2">
-              <CardTitle>Transactions</CardTitle>
-              <CardDescription>
-                Recent transactions from your store.
-              </CardDescription>
+              <CardTitle>تراکنش ها</CardTitle>
+              <CardDescription>آخرین تراکنش های فروشگاه شما </CardDescription>
             </div>
-            <Button asChild size="sm" className="ml-auto gap-1">
+            <Button asChild size="sm" className="mr-auto gap-1">
               <Link href="#">
-                View All
+               مشاهده همه
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </Button>
@@ -97,13 +97,13 @@ export default function Dashboard() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Customer</TableHead>
-                  <TableHead className="hidden xl:table-column">Type</TableHead>
+                  <TableHead>مشتریان</TableHead>
+                  <TableHead className="hidden xl:table-column">نوع</TableHead>
                   <TableHead className="hidden xl:table-column">
-                    Status
+                    وضعیت
                   </TableHead>
                   <TableHead className="hidden xl:table-column">Date</TableHead>
-                  <TableHead className="text-right">Amount</TableHead>
+                  <TableHead className="text-left">Amount</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

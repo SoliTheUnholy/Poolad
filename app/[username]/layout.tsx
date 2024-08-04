@@ -11,6 +11,7 @@ import {
   Package2,
   Search,
   ShoppingCart,
+  Slash,
   Users,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -50,14 +51,14 @@ export default function UserLayout({
   const pathname = usePathname();
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="hidden border-r bg-muted/40 md:block">
+      <div className="hidden border-l bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <Package2 className="h-6 w-6" />
-              <span className="">Nazho</span>
+              <span className="">ناژو</span>
             </Link>
-            <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
+            <Button variant="outline" size="icon" className="mr-auto h-8 w-8">
               <Bell className="h-4 w-4" />
               <span className="sr-only">Toggle notifications</span>
             </Button>
@@ -69,14 +70,14 @@ export default function UserLayout({
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
               >
                 <Home className="h-4 w-4" />
-                Dashboard
+                داشبورد
               </Link>
               <Link
                 href="/username/orders"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
               >
                 <ShoppingCart className="h-4 w-4" />
-                Orders
+                سفارشات
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   6
                 </Badge>
@@ -86,36 +87,33 @@ export default function UserLayout({
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
               >
                 <Package className="h-4 w-4" />
-                Products
+                محصولات
               </Link>
               <Link
                 href="/username/customers"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
               >
                 <Users className="h-4 w-4" />
-                Customers
+                مشتریان
               </Link>
               <Link
                 href="/username/analytics"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
               >
                 <LineChart className="h-4 w-4" />
-                Analytics
+                آمار
               </Link>
             </nav>
           </div>
           <div className="mt-auto p-4">
             <Card x-chunk="dashboard-02-chunk-0">
               <CardHeader className="p-2 pt-0 md:p-4">
-                <CardTitle>Upgrade to Pro</CardTitle>
-                <CardDescription>
-                  Unlock all features and get unlimited access to our support
-                  team.
-                </CardDescription>
+                <CardTitle>خرید اشتراک ویژه</CardTitle>
+                <CardDescription>ثبت محصولات به تعداد نامحدود</CardDescription>
               </CardHeader>
               <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
                 <Button size="sm" className="w-full">
-                  Upgrade
+                  خرید
                 </Button>
               </CardContent>
             </Card>
@@ -135,11 +133,11 @@ export default function UserLayout({
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="flex flex-col">
+            <SheetContent side="right" className="flex flex-col">
               <nav className="grid gap-2 text-lg font-medium">
                 <Link
                   href="#"
-                  className="flex items-center gap-2 text-lg font-semibold"
+                  className="flex items-center justify-end gap-2 text-lg font-semibold"
                 >
                   <Package2 className="h-6 w-6" />
                   <span className="sr-only">Nazho</span>
@@ -205,28 +203,32 @@ export default function UserLayout({
             <BreadcrumbList>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href="#">Dashboard</Link>
+                  <Link href="#">داشبورد</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator />
+              <BreadcrumbSeparator>
+                <Slash />
+              </BreadcrumbSeparator>
               <BreadcrumbItem>
                 <BreadcrumbLink asChild>
-                  <Link href="#">Orders</Link>
+                  <Link href="#">سفارشات</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator />
+              <BreadcrumbSeparator>
+                <Slash />
+              </BreadcrumbSeparator>
               <BreadcrumbItem>
-                <BreadcrumbPage>Recent Orders</BreadcrumbPage>
+                <BreadcrumbPage>آخرین سفارشات</BreadcrumbPage>
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <div className="relative ml-auto flex-1 md:grow-0">
+          <div className="relative mr-auto flex-1 md:grow-0">
             <form>
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
-                  placeholder="Search products..."
+                  placeholder="جستوجوی محصولات"
                   className="w-full appearance-none bg-background pl-8 shadow-none md:w-[200px] lg:w-[320px]"
                 />
               </div>

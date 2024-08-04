@@ -46,11 +46,11 @@ export default function Register() {
   };
   return (
     <div className="flex h-[100svh] w-full items-center justify-center py-12">
-      <Card className="absolute mx-auto max-w-sm">
+      <Card className="absolute mx-auto sm:w-96 max-w-96">
         <CardHeader>
-          <CardTitle className="text-xl">Sign Up</CardTitle>
+          <CardTitle className="text-xl">ساخت حساب کاربری</CardTitle>
           <CardDescription>
-            Enter your information to create an account
+            اطلاعات خود را جهت ساخت حساب وارد کنید{" "}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -61,46 +61,39 @@ export default function Register() {
               </div>
             )}
             <div className="grid gap-2">
-              <Label htmlFor="username">Username</Label>
-              <Input name="username" id="username" placeholder="Max45" required />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="username">نام کاربری</Label>
               <Input
-                name="email"
-                id="email"
-                type="email"
-                placeholder="m@example.com"
+                name="username"
+                id="username"
+                placeholder="صادق"
                 required
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input required name="password" id="password" type="password" />
+              <Label htmlFor="number">شماره تلفن</Label>
+              <Input
+                name="number"
+                id="number"
+                type="number"
+                placeholder="09012345678"
+                required
+              />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="occupation">Occupation</Label>
-              <Select name="occupation" required>
-                <SelectTrigger id="occupation">
-                  <SelectValue placeholder="Select" />
-                </SelectTrigger>
-                <SelectContent position="popper">
-                  <SelectItem value="teacher">Teacher</SelectItem>
-                  <SelectItem value="student">Student</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="password">رمز</Label>
+              <Input required name="password" id="password" type="password" />
             </div>
             <Button type="submit" className="w-full">
-              Create an account
+              ساخت حساب کاربری
             </Button>
             <Button variant="outline" className="w-full">
-              Sign up with Google
+              ورود با رمز یکبار مصرف
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
-            Already have an account?{" "}
-            <Link href="/login" className="underline">
-              Sign in
+            حساب کاربری دارید ؟{" "}
+            <Link href="/login" className="underline text-primary">
+              ورود{" "}
             </Link>
           </div>
         </CardContent>
