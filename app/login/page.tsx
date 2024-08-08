@@ -39,7 +39,7 @@ export default function Login() {
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">ورود به حساب</h1>
             <p className="text-balance text-muted-foreground">
-              شماره تلفن و رمز ورود خود را وارد کنید{" "}
+              شماره تلفن و رمز ورود خود را وارد کنید
             </p>
           </div>
           <div className="grid gap-4">
@@ -86,9 +86,9 @@ export default function Login() {
       </form>
       <div className="hidden bg-muted lg:block">
         <Image
-          src="/placeholder.svg"
+          src="/papers_girl.png"
           alt="Image"
-          width="1920"
+          width="960"
           height="1080"
           className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />

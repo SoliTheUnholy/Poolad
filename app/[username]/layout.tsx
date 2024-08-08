@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 
 import Link from "next/link";
 import {
@@ -7,8 +8,11 @@ import {
   Home,
   LineChart,
   Menu,
+  MessageSquare,
   Package,
   Package2,
+  PackagePlus,
+  PackageSearch,
   Search,
   ShoppingCart,
   Slash,
@@ -24,6 +28,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -32,7 +42,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -72,16 +87,34 @@ export default function UserLayout({
                 <Home className="h-4 w-4" />
                 داشبورد
               </Link>
-              <Link
-                href="/username/orders"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
-              >
-                <ShoppingCart className="h-4 w-4" />
-                سفارشات
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
-                </Badge>
-              </Link>
+              <Accordion type="single" collapsible>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>
+                    <span
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <Package className="h-4 w-4" />
+                      سفارشات
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <Link
+                      href="/username"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <PackagePlus className="h-4 w-4" />
+                      ثبت سفارش جدید
+                    </Link>
+                    <Link
+                      href="/username"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <PackageSearch className="h-4 w-4" />
+                      لیست سفارشات
+                    </Link>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
               <Link
                 href="/username/products"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
@@ -142,58 +175,86 @@ export default function UserLayout({
                   <Package2 className="h-6 w-6" />
                   <span className="sr-only">Nazho</span>
                 </Link>
-                <Link
-                  href="/username"
-                  className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
-                >
-                  <Home className="h-5 w-5" />
-                  Dashboard
+                <Link href="/username">
+                  <SheetClose
+                    className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
+                  >
+                    <Home className="h-5 w-5" />
+                    داشبورد
+                  </SheetClose>
                 </Link>
-                <Link
-                  href="/username/orders"
-                  className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
-                >
-                  <ShoppingCart className="h-5 w-5" />
-                  Orders
-                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    6
-                  </Badge>
+                <Accordion type="single" collapsible>
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>
+                      <Link href="/username">
+                        <SheetClose
+                          className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
+                        >
+                          <Package className="h-5 w-5" />
+                          سفارشات
+                        </SheetClose>
+                      </Link>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <Link href="/username">
+                        <SheetClose
+                          className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
+                        >
+                          <PackagePlus className="h-5 w-5" />
+                          ثبت سفارش جدید
+                        </SheetClose>
+                      </Link>
+                      <Link href="/username">
+                        <SheetClose
+                          className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
+                        >
+                          <PackageSearch className="h-5 w-5" />
+                          لیست سفارشات
+                        </SheetClose>
+                      </Link>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                <Link href="/username">
+                  <SheetClose
+                    className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
+                  >
+                    <Package className="h-5 w-5" />
+                    محصولات
+                  </SheetClose>
                 </Link>
-                <Link
-                  href="/username/products"
-                  className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
-                >
-                  <Package className="h-5 w-5" />
-                  Products
+                <Link href="/username">
+                  <SheetClose
+                    className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
+                  >
+                    <Users className="h-5 w-5" />
+                    مشتریان
+                  </SheetClose>
                 </Link>
-                <Link
-                  href="/username/customers"
-                  className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
-                >
-                  <Users className="h-5 w-5" />
-                  Customers
-                </Link>
-                <Link
-                  href="/username/analytics"
-                  className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
-                >
-                  <LineChart className="h-5 w-5" />
-                  Analytics
+                <Link href="/username">
+                  <SheetClose
+                    className={`mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/" ? "bg-muted text-foreground" : ""}`}
+                  >
+                    <LineChart className="h-5 w-5" />
+                    آمار
+                  </SheetClose>
                 </Link>
               </nav>
               <div className="mt-auto">
                 <Card>
                   <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
+                    <CardTitle>پشتیبانی آنلاین</CardTitle>
                     <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
+                      ارتباط انلاین با کارشناسان ما صبح 9 الی 13 و عصر 15 الی 18
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Button size="sm" className="w-full">
-                      Upgrade
-                    </Button>
+                    <SheetClose>
+                      <Button size="sm" className="flex w-full gap-4">
+                        <MessageSquare className="h-5 w-5" />
+                        شروع گفتگو
+                      </Button>
+                    </SheetClose>
                   </CardContent>
                 </Card>
               </div>
@@ -241,17 +302,26 @@ export default function UserLayout({
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuContent align="end" className="mx-3">
+              <DropdownMenuLabel>سهیل</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuItem>تنظیمات</DropdownMenuItem>
+              <DropdownMenuItem>تغییر رمز</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem className="text-red-500">خروج</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
-        {children}
+        <section className="relative">
+          <section className="absolute w-full">{children}</section>
+          <Image
+          className="object-cover h-svh"
+            src="/office.png"
+            width={1920}
+            height={1080}
+            alt={"Image of office"}
+          ></Image>
+        </section>
       </div>
     </div>
   );

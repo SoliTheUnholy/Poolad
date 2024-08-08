@@ -46,7 +46,7 @@ export default function Register() {
   };
   return (
     <div className="flex h-[100svh] w-full items-center justify-center py-12">
-      <Card className="absolute mx-auto sm:w-96 max-w-96">
+      <Card className="absolute mx-auto max-w-96 sm:w-96">
         <CardHeader>
           <CardTitle className="text-xl">ساخت حساب کاربری</CardTitle>
           <CardDescription>
@@ -92,7 +92,7 @@ export default function Register() {
           </form>
           <div className="mt-4 text-center text-sm">
             حساب کاربری دارید ؟{" "}
-            <Link href="/login" className="underline text-primary">
+            <Link href="/login" className="text-primary underline">
               ورود{" "}
             </Link>
           </div>
@@ -100,7 +100,7 @@ export default function Register() {
       </Card>
       <div className="hidden h-screen w-full bg-muted lg:block">
         <Image
-          src="/placeholder.svg"
+          src="/sign-up.png"
           alt="Image"
           width="1920"
           height="1080"
