@@ -5,6 +5,7 @@ import {
   CreditCard,
   DollarSign,
   Users,
+  Wallet,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +14,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -30,7 +32,7 @@ export default function Dashboard() {
       <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
         <Card x-chunk="dashboard-01-chunk-0">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">مبلغ فروش</CardTitle>
+            <CardTitle className="text-sm font-medium">موجودی فعلی</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -39,18 +41,27 @@ export default function Dashboard() {
               +20.1% نسبت به ماه گذشته
             </p>
           </CardContent>
+          <CardFooter className="flex justify-end">
+            <Button className="gap-1 self-end">
+              تاریخچه حساب <ArrowUpRight className="h-4 w-4" />
+            </Button>
+          </CardFooter>
         </Card>
-        <Card x-chunk="dashboard-01-chunk-1">
+        <Card x-chunk="dashboard-01-chunk-1 ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">مشتریان</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">شارژ کیف پول</CardTitle>
+            <Wallet className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">2350</div>
-            <p className="text-xs text-muted-foreground">
-              +180.1% نسبت به ماه گذشته
-            </p>
-          </CardContent>
+            <div className="text-2xl font-bold"> شارژ کنید</div>
+            <p className="text-xs text-muted-foreground">با شارژ می</p>
+          </CardContent>{" "}
+          <CardFooter className="flex justify-end">
+            <Button className="gap-1 self-end">
+              پرداخت
+              <ArrowUpRight className="h-4 w-4" />
+            </Button>
+          </CardFooter>
         </Card>
         <Card x-chunk="dashboard-01-chunk-2">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -88,7 +99,7 @@ export default function Dashboard() {
             </div>
             <Button asChild size="sm" className="mr-auto gap-1">
               <Link href="#">
-               مشاهده همه
+                مشاهده همه
                 <ArrowUpRight className="h-4 w-4" />
               </Link>
             </Button>

@@ -120,33 +120,86 @@ export default function UserLayout({
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
               >
                 <Package className="h-4 w-4" />
-                محصولات
+                مدیریت فایل ها
+              </Link>
+              <Link
+                href="/username/products"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+              >
+                <Package className="h-4 w-4" />
+                شارژ حساب
+              </Link>
+              <Link
+                href="/username/products"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+              >
+                <Package className="h-4 w-4" />
+                پنل ویژه ناشرین
+              </Link>
+              <Link
+                href="/username/products"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+              >
+                <Package className="h-4 w-4" />
+                تاریخچه موجودی
+              </Link>
+              <Link
+                href="/username/products"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+              >
+                <Package className="h-4 w-4" />
+                ارتباط با مدیریت
+              </Link>
+              <Link
+                href="/username/products"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+              >
+                <Package className="h-4 w-4" />
+                امتیازت من
               </Link>
               <Link
                 href="/username/customers"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
               >
                 <Users className="h-4 w-4" />
-                مشتریان
+                تغییر مشخصات اکانت
               </Link>
               <Link
                 href="/username/analytics"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
               >
                 <LineChart className="h-4 w-4" />
-                آمار
+                تغییر شماره اطلاع رسانی
+              </Link>
+              <Link
+                href="/username/analytics"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+              >
+                <LineChart className="h-4 w-4" />
+                تغییر رمز
+              </Link>
+              <Link
+                href="/username/analytics"
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground text-red-500 transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+              >
+                <LineChart className="h-4 w-4" />
+                خروج{" "}
               </Link>
             </nav>
           </div>
           <div className="mt-auto p-4">
             <Card x-chunk="dashboard-02-chunk-0">
               <CardHeader className="p-2 pt-0 md:p-4">
-                <CardTitle>خرید اشتراک ویژه</CardTitle>
-                <CardDescription>ثبت محصولات به تعداد نامحدود</CardDescription>
+                <CardTitle>پشتیبانی آنلاین</CardTitle>
+                <CardDescription>
+                  {" "}
+                  ارتباط انلاین با کارشناسان ما صبح 9 الی 13 و عصر 15 الی 18
+                </CardDescription>
               </CardHeader>
               <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                <Button size="sm" className="w-full">
-                  خرید
+                <Button size="sm" className="w-full gap-1">
+                  <MessageSquare className="h-4 w-4" />
+                  شروع گفتگو{" "}
                 </Button>
               </CardContent>
             </Card>
@@ -315,7 +368,7 @@ export default function UserLayout({
         <section className="relative">
           <section className="absolute w-full">{children}</section>
           <Image
-          className="object-cover h-svh"
+            className="h-svh object-cover"
             src="/office.png"
             width={1920}
             height={1080}
