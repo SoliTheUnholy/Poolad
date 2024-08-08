@@ -64,6 +64,7 @@ export default function UserLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
+  const Date = "تاریخ روز";
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-l bg-muted/40 md:block">
@@ -207,7 +208,7 @@ export default function UserLayout({
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 items-center justify-between border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
               <Button
@@ -336,7 +337,8 @@ export default function UserLayout({
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
-          <div className="relative mr-auto flex-1 md:grow-0">
+          <span className="text-sm text-muted-foreground">{Date}</span>
+          <div className="relative flex gap-4 flex-1 md:grow-0">
             <form>
               <div className="relative">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -347,23 +349,29 @@ export default function UserLayout({
                 />
               </div>
             </form>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full"
+                >
+                  <CircleUser className="h-5 w-5" />
+                  <span className="sr-only">Toggle user menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="mx-3">
+                <DropdownMenuLabel>سهیل</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>تنظیمات</DropdownMenuItem>
+                <DropdownMenuItem>تغییر رمز</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem className="text-red-500">
+                  خروج
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
-                <span className="sr-only">Toggle user menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="mx-3">
-              <DropdownMenuLabel>سهیل</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>تنظیمات</DropdownMenuItem>
-              <DropdownMenuItem>تغییر رمز</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-red-500">خروج</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </header>
         <section className="relative">
           <section className="absolute w-full">{children}</section>
