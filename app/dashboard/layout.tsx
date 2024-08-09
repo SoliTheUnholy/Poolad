@@ -51,7 +51,7 @@ export default function UserLayout({
   const pathname = usePathname();
   const balance = "37,000";
   const options = { year: "numeric", month: "long", day: "numeric" };
-  const Today = new Date().toLocaleDateString("fa-IR", options);
+  const Today = new Date().toLocaleDateString("fa-IR", options as any);
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-l bg-muted/40 md:block">
@@ -364,7 +364,7 @@ export default function UserLayout({
           </div>
         </header>
         <section className="relative">
-          <section className="absolute flex flex-col h-[93vh] w-full gap-4 overflow-x-hidden overflow-y-scroll p-4 lg:gap-8 lg:p-8">
+          <section className="absolute flex h-[93vh] w-full flex-col gap-4 overflow-x-hidden overflow-y-scroll p-4 lg:gap-8 lg:p-8">
             <div className="grid h-min grid-rows-1 gap-4 md:grid-cols-3">
               <Card className="row-span-1 flex flex-col justify-between">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
