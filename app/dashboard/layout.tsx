@@ -427,13 +427,9 @@ export default function UserLayout({
             </div>
             {children}
           </section>
-          <Image
-            className="h-[93vh] w-full object-cover"
-            src="/office.png"
-            width={1920}
-            height={1080}
-            alt={"Image of office"}
-          ></Image>
+          <div
+            className="h-[93vh] w-full object-cover bg-[url('/bg-tile.jpg')] bg-repeat"
+          ></div>
         </section>
       </div>
     </div>

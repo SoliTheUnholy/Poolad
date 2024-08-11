@@ -17,31 +17,26 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export default function Register() {
   const [error, setError] = useState<string>();
   const router = useRouter();
   const ref = useRef<HTMLFormElement>(null);
   const handleSubmit = async (formData: FormData) => {
+    if (formData.get("password") !== formData.get("rpassword")) {
+      setError("Passwords don't match");
+      return;
+    }
     const r = await register({
-      username: formData.get("username"),
-      email: formData.get("email"),
+      number: formData.get("number"),
       password: formData.get("password"),
-      occupation: formData.get("occupation"),
     });
     ref.current?.reset();
     if (r?.error) {
       setError(r.error);
       return;
     } else {
-      return router.push(`/login`);
+      return router.push("/login");
     }
   };
   return (
@@ -50,7 +45,7 @@ export default function Register() {
         <CardHeader>
           <CardTitle className="text-xl">ساخت حساب کاربری</CardTitle>
           <CardDescription>
-            اطلاعات خود را جهت ساخت حساب وارد کنید{" "}
+            اطلاعات خود را جهت ساخت حساب وارد کنید
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -61,27 +56,21 @@ export default function Register() {
               </div>
             )}
             <div className="grid gap-2">
-              <Label htmlFor="username">نام کاربری</Label>
-              <Input
-                name="username"
-                id="username"
-                placeholder="صادق"
-                required
-              />
-            </div>
-            <div className="grid gap-2">
               <Label htmlFor="number">شماره تلفن</Label>
               <Input
                 name="number"
                 id="number"
                 type="number"
                 placeholder="09012345678"
-                required
               />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="password">رمز</Label>
-              <Input required name="password" id="password" type="password" />
+              <Input name="password" id="password" type="password" />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="rpassword">تکرار رمز</Label>
+              <Input name="rpassword" id="rpassword" type="password" />
             </div>
             <Button type="submit" className="w-full">
               ساخت حساب کاربری
@@ -91,21 +80,15 @@ export default function Register() {
             </Button>
           </form>
           <div className="mt-4 text-center text-sm">
-            حساب کاربری دارید ؟{" "}
+            حساب کاربری دارید ؟
             <Link href="/login" className="text-primary underline">
-              ورود{" "}
+              ورود
             </Link>
           </div>
         </CardContent>
       </Card>
       <div className="hidden h-screen w-full bg-muted lg:block">
-        <Image
-          src="/sign-up.png"
-          alt="Image"
-          width="1920"
-          height="1080"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
+        <div className="h-full w-full bg-[url('/bg-tile.jpg')] bg-repeat object-cover dark:brightness-[0.2] dark:grayscale"></div>
       </div>
     </div>
   );

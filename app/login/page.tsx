@@ -18,7 +18,7 @@ export default function Login() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await signIn("credentials", {
-      email: formData.get("email"),
+      number: formData.get("number"),
       password: formData.get("password"),
       redirect: false,
     });
@@ -26,7 +26,7 @@ export default function Login() {
       setError(res.error as string);
     }
     if (res?.ok) {
-      return router.push("/username");
+      return router.push("/dashboard");
     }
   };
   return (
@@ -64,7 +64,7 @@ export default function Login() {
                   href="/forgot-password"
                   className="text-sm underline"
                 >
-                  رمز خود را فراموش کرده اید؟{" "}
+                  رمز خود را فراموش کرده اید؟
                 </Link>
               </div>
               <Input name="password" type="password" required />

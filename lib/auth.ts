@@ -10,23 +10,21 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       id: "credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        number: { label: "number", type: "text" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
         await connectDB();
         const user = await User.findOne({
-          email: credentials?.email,
+          number: credentials?.number,
         }).select("+password");
-        console.log(user)
-        if (!user) throw new Error("Wrong Email");
+        if (!user) throw new Error("Wrong phonenumber or password");
 
         const passwordMatch = await bcrypt.compare(
           credentials!.password,
           user.password,
         );
-
-        if (!passwordMatch) throw new Error("Wrong Password");
+        if (!passwordMatch) throw new Error("Wrong phonenumber or password");
         return user;
       },
     }),

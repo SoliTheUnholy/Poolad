@@ -4,27 +4,18 @@ import User from "@/models/User";
 import bcrypt from "bcryptjs";
 
 export const register = async (values: any) => {
-  const { email, password, username, occupation } = values;
-
+  const { password, number } = values;
   try {
     await connectDB();
-    const userFound = await User.findOne({ email });
-    if (userFound) {
-      return {
-        error: "Email already exists",
-      };
-    }
-    const Euser = await User.findOne({ username });
+    const Euser = await User.findOne({ number });
     if (Euser) {
       return {
-        error: "Username is not available",
+        error: "Number is used",
       };
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({
-      username,
-      occupation,
-      email,
+      number,
       password: hashedPassword,
     });
     const savedUser = await user.save();
