@@ -1,12 +1,8 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowUpRight,
   Bell,
   CircleUser,
-  CreditCard,
-  DollarSign,
   Home,
   LineChart,
   Menu,
@@ -16,14 +12,12 @@ import {
   PackagePlus,
   PackageSearch,
   Users,
-  Wallet,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -49,7 +43,6 @@ export default function UserLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const balance = "37,000";
   const options = { year: "numeric", month: "long", day: "numeric" };
   const Today = new Date().toLocaleDateString("fa-IR", options as any);
   return (
@@ -365,66 +358,6 @@ export default function UserLayout({
         </header>
         <section className="relative">
           <section className="absolute flex h-[93vh] w-full flex-col gap-4 overflow-x-hidden overflow-y-scroll p-4 lg:gap-8 lg:p-8">
-            <div className="grid h-min grid-rows-1 gap-4 md:grid-cols-3">
-              <Card className="row-span-1 flex flex-col justify-between">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    موجودی ها
-                  </CardTitle>
-                  <DollarSign className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    فعلی: {balance} تومان
-                  </p>
-                </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Button className="gap-1 self-end">
-                    تاریخچه <ArrowUpRight className="h-4 w-4" />
-                  </Button>
-                </CardFooter>
-              </Card>
-              <Card className="row-span-1 flex flex-col justify-between">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    شارژ کیف پول
-                  </CardTitle>
-                  <Wallet className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    با شارژ حساب می توانید بدهی قبلی خود را به راحتی پرداخت
-                    نمایید
-                  </p>
-                </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Button className="gap-1 self-end">
-                    پرداخت
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Button>
-                </CardFooter>
-              </Card>
-              <Card className="row-span-1 flex flex-col justify-between">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    مدیریت فایلها
-                  </CardTitle>
-                  <CreditCard className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">
-                    فایلهای پرتکرار خود را ذخیر کنید و از هرجا و هرزمان که تمایل
-                    داشتید سفارش خود را ثبت کنید
-                  </p>
-                </CardContent>
-                <CardFooter className="flex justify-end">
-                  <Button className="gap-1 self-end">
-                    ورود
-                    <ArrowUpRight className="h-4 w-4" />
-                  </Button>
-                </CardFooter>
-              </Card>
-            </div>
             {children}
           </section>
           <div
