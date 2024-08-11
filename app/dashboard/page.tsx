@@ -153,7 +153,7 @@ export default function Dashboard() {
             </Button>
           </CardFooter>
         </Card>
-        <Card className="col-span-2 row-span-1 flex flex-col justify-between bg-gradient-to-r from-purple-500/20 to-pink-500/20">
+        <Card className="lg:col-span-2 row-span-1 flex flex-col justify-between bg-gradient-to-r from-purple-500/20 to-pink-500/20">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">امتیازت من </CardTitle>
             <CreditCard className="h-4 w-4 text-muted-foreground" />
