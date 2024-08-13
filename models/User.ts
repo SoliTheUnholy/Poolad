@@ -8,7 +8,7 @@ export interface UserDocument {
   name: string;
   fname: string;
   phone: string;
-  image: string;
+  avatar: string;
   createdAt: Date;
   updatedAt: Date;
 }

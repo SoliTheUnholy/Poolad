@@ -30,6 +30,7 @@ export default function Register() {
     const r = await register({
       number: formData.get("number"),
       password: formData.get("password"),
+      avatar:"1.png"
     });
     ref.current?.reset();
     if (r?.error) {

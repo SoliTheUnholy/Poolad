@@ -1,4 +1,11 @@
 "use client";
+import Image from "next/image";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import Link from "next/link";
 import {
   Bell,
@@ -36,12 +43,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function UserLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = useSession();
   const pathname = usePathname();
   const options = { year: "numeric", month: "long", day: "numeric" };
   const Today = new Date().toLocaleDateString("fa-IR", options as any);
@@ -52,7 +61,7 @@ export default function UserLayout({
           <div className="flex h-[7vh] items-center border-b px-4 lg:h-[7vh] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <Package2 className="h-6 w-6" />
-              <span className="">ناژو</span>
+              <span className="">مجتمع چاپ دیجیتال ناژو</span>
             </Link>
             <Button variant="outline" size="icon" className="mr-auto h-8 w-8">
               <Bell className="h-4 w-4" />
@@ -68,27 +77,43 @@ export default function UserLayout({
                 <Home className="h-4 w-4" />
                 داشبورد
               </Link>
-              <Link
-                href="/dashboard/neworder"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/neworder" ? "bg-muted text-primary" : ""}`}
+              <Accordion
+                type="single"
+                collapsible
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
               >
-                <PackagePlus className="h-4 w-4" />
-                ثبت سفارش جدید
-              </Link>
-              <Link
-                href="/dashboard/orderslist"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderlist" ? "bg-muted text-primary" : ""}`}
-              >
-                <PackageSearch className="h-4 w-4" />
-                لیست سفارشات
-              </Link>
-              <Link
-                href="/dashboard/files"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/files" ? "bg-muted text-primary" : ""}`}
-              >
-                <Package className="h-4 w-4" />
-                مدیریت فایلها
-              </Link>
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>
+                    <span className="flex items-center gap-3 w-max">
+                      <PackagePlus className="h-4 w-4" />
+                      سفارشات
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <Link
+                      href="/dashboard/neworder"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/neworder" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <PackagePlus className="h-4 w-4" />
+                      ثبت سفارش جدید
+                    </Link>
+                    <Link
+                      href="/dashboard/orderslist"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderlist" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <PackageSearch className="h-4 w-4" />
+                      لیست سفارشات
+                    </Link>
+                    <Link
+                      href="/dashboard/files"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/files" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <Package className="h-4 w-4" />
+                      مدیریت فایلها
+                    </Link>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
               <Link
                 href="/dashboard/addfunds"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/addfunds" ? "bg-muted text-primary" : ""}`}
@@ -195,7 +220,7 @@ export default function UserLayout({
                   className="flex items-center gap-2 font-semibold"
                 >
                   <Package2 className="h-6 w-6" />
-                  <span className="">ناژو</span>
+                  <span className="">مجتمع چاپ دیجیتال ناژو</span>
                 </Link>
                 <Button
                   variant="outline"
@@ -339,7 +364,7 @@ export default function UserLayout({
                   size="icon"
                   className="rounded-full"
                 >
-                  <CircleUser className="h-5 w-5" />
+                  <img src={"session.data?.avatar"} alt={""}></img>
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
@@ -360,9 +385,7 @@ export default function UserLayout({
           <section className="absolute flex h-[93vh] w-full flex-col gap-4 overflow-x-hidden overflow-y-scroll p-4 lg:gap-8 lg:p-8">
             {children}
           </section>
-          <div
-            className="h-[93vh] w-full object-cover bg-[url('/bg-tile.jpg')] bg-repeat"
-          ></div>
+          <div className="h-[93vh] w-full bg-[url('/bg-tile.jpg')] bg-repeat object-cover"></div>
         </section>
       </div>
     </div>
