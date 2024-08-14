@@ -1,6 +1,11 @@
 "use client";
 import Image from "next/image";
 import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -44,6 +49,7 @@ import {
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import NewOrder from "@/components/neworder";
 
 export default function UserLayout({
   children,
@@ -90,13 +96,20 @@ export default function UserLayout({
                     </span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Link
-                      href="/dashboard/neworder"
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/neworder" ? "bg-muted text-primary" : ""}`}
-                    >
-                      <PackagePlus className="h-4 w-4" />
-                      ثبت سفارش جدید
-                    </Link>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <div
+                          variant="outline"
+                          className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/neworder" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <PackagePlus className="h-4 w-4" />
+                          ثبت سفارش جدید
+                        </div>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <NewOrder />
+                      </DialogContent>
+                    </Dialog>
                     <Link
                       href="/dashboard/orderslist"
                       className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderlist" ? "bg-muted text-primary" : ""}`}
