@@ -41,7 +41,7 @@ export default function Register() {
     }
   };
   return (
-    <div className="flex h-[100svh] w-full items-center justify-center py-12">
+    <div className="flex h-[100vh] w-full items-center justify-center py-12">
       <Card className="absolute mx-auto max-w-96 sm:w-96">
         <CardHeader>
           <CardTitle className="text-xl">ساخت حساب کاربری</CardTitle>

@@ -82,9 +82,9 @@ export default function UserLayout({
                 collapsible
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
               >
-                <AccordionItem value="item-1">
+                <AccordionItem value="item-1" className="w-full">
                   <AccordionTrigger>
-                    <span className="flex items-center gap-3 w-max">
+                    <span className="flex w-max items-center gap-3">
                       <PackagePlus className="h-4 w-4" />
                       سفارشات
                     </span>
@@ -114,13 +114,80 @@ export default function UserLayout({
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
-              <Link
-                href="/dashboard/addfunds"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/addfunds" ? "bg-muted text-primary" : ""}`}
+              <Accordion
+                type="single"
+                collapsible
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
               >
-                <Package className="h-4 w-4" />
-                شارژ حساب
-              </Link>
+                <AccordionItem value="item-1" className="w-full">
+                  <AccordionTrigger>
+                    <span className="flex w-max items-center gap-3">
+                      <PackagePlus className="h-4 w-4" />
+                      کیف پول
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <Link
+                      href="/dashboard/addfunds"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/addfunds" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <Package className="h-4 w-4" />
+                      شارژ حساب
+                    </Link>
+                    <Link
+                      href="/dashboard/balancehistory"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/balancehistory" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <Package className="h-4 w-4" />
+                      تاریخچه موجودی
+                    </Link>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+              <Accordion
+                type="single"
+                collapsible
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
+              >
+                <AccordionItem value="item-1" className="w-full">
+                  <AccordionTrigger>
+                    <span className="flex w-max items-center gap-3">
+                      <PackagePlus className="h-4 w-4" />
+                      اطلاعات کاربر
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <Link
+                      href="/dashboard/points"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/points" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <Package className="h-4 w-4" />
+                      امتیازت من
+                    </Link>
+                    <Link
+                      href="/dashboard/changeinfo"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <Users className="h-4 w-4" />
+                      تغییر مشخصات اکانت
+                    </Link>
+                    <Link
+                      href="/dashboard/changenumber"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changenumber" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <LineChart className="h-4 w-4" />
+                      تغییر شماره اطلاع رسانی
+                    </Link>
+                    <Link
+                      href="/dashboard/changepassword"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <LineChart className="h-4 w-4" />
+                      تغییر رمز
+                    </Link>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
               <Link
                 href="/dashboard/publishers"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/publishers" ? "bg-muted text-primary" : ""}`}
@@ -128,47 +195,13 @@ export default function UserLayout({
                 <Package className="h-4 w-4" />
                 پنل ویژه ناشرین
               </Link>
-              <Link
-                href="/dashboard/balancehistory"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/balancehistory" ? "bg-muted text-primary" : ""}`}
-              >
-                <Package className="h-4 w-4" />
-                تاریخچه موجودی
-              </Link>
+
               <Link
                 href="/dashboard/contactmanagement"
                 className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/contactmanagement" ? "bg-muted text-primary" : ""}`}
               >
                 <Package className="h-4 w-4" />
                 ارتباط با مدیریت
-              </Link>
-              <Link
-                href="/dashboard/points"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/points" ? "bg-muted text-primary" : ""}`}
-              >
-                <Package className="h-4 w-4" />
-                امتیازت من
-              </Link>
-              <Link
-                href="/dashboard/changeinfo"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
-              >
-                <Users className="h-4 w-4" />
-                تغییر مشخصات اکانت
-              </Link>
-              <Link
-                href="/dashboard/changenumber"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changenumber" ? "bg-muted text-primary" : ""}`}
-              >
-                <LineChart className="h-4 w-4" />
-                تغییر شماره اطلاع رسانی
-              </Link>
-              <Link
-                href="/dashboard/changepassword"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
-              >
-                <LineChart className="h-4 w-4" />
-                تغییر رمز
               </Link>
               <Link
                 href="/"
@@ -234,102 +267,150 @@ export default function UserLayout({
               <nav className="grid gap-2 text-lg font-medium">
                 <Link href="/dashboard">
                   <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard" ? "bg-muted text-primary" : ""}`}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard" ? "bg-muted text-primary" : ""}`}
                   >
                     <Home className="h-4 w-4" />
                     داشبورد
                   </SheetClose>
                 </Link>
-                <Link href="/dashboard/neworder">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/neworder" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <PackagePlus className="h-4 w-4" />
-                    ثبت سفارش جدید
-                  </SheetClose>
-                </Link>
-                <Link href="/dashboard/orderslist">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/orderslist" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <PackageSearch className="h-4 w-4" />
-                    لیست سفارشات
-                  </SheetClose>
-                </Link>
-                <Link href="/dashboard/files">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/files" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <Package className="h-4 w-4" />
-                    مدیریت فایلها
-                  </SheetClose>
-                </Link>
-                <Link href="/dashboard/addfunds">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/addfunds" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <Package className="h-4 w-4" />
-                    شارژ حساب
-                  </SheetClose>
-                </Link>
+                <Accordion
+                  type="single"
+                  collapsible
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
+                >
+                  <AccordionItem value="item-1" className="w-full">
+                    <AccordionTrigger>
+                      <span className="flex w-max items-center gap-3">
+                        <PackagePlus className="h-4 w-4" />
+                        سفارشات
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <Link href="/dashboard/neworder">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/neworder" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <PackagePlus className="h-4 w-4" />
+                          ثبت سفارش جدید
+                        </SheetClose>
+                      </Link>
+                      <Link href="/dashboard/orderslist">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderslist" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <PackageSearch className="h-4 w-4" />
+                          لیست سفارشات
+                        </SheetClose>
+                      </Link>
+                      <Link href="/dashboard/files">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/files" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <Package className="h-4 w-4" />
+                          مدیریت فایلها
+                        </SheetClose>
+                      </Link>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                <Accordion
+                  type="single"
+                  collapsible
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
+                >
+                  <AccordionItem value="item-1" className="w-full">
+                    <AccordionTrigger>
+                      <span className="flex w-max items-center gap-3">
+                        <PackagePlus className="h-4 w-4" />
+                        کیف پول
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <Link href="/dashboard/addfunds">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/addfunds" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <Package className="h-4 w-4" />
+                          شارژ حساب
+                        </SheetClose>
+                      </Link>
+                      <Link href="/dashboard/balancehistory">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/balancehistory" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <Package className="h-4 w-4" />
+                          تاریخچه موجودی
+                        </SheetClose>
+                      </Link>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+                <Accordion
+                  type="single"
+                  collapsible
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
+                >
+                  <AccordionItem value="item-1" className="w-full">
+                    <AccordionTrigger>
+                      <span className="flex w-max items-center gap-3">
+                        <PackagePlus className="h-4 w-4" />
+                        اطلاعات کاربر
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <Link href="/dashboard/points">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/points" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <Package className="h-4 w-4" />
+                          امتیازت من
+                        </SheetClose>
+                      </Link>
+                      <Link href="/dashboard/changeinfo">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <Users className="h-4 w-4" />
+                          تغییر مشخصات اکانت
+                        </SheetClose>
+                      </Link>
+                      <Link href="/dashboard/changenumber">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changenumber" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <LineChart className="h-4 w-4" />
+                          تغییر شماره اطلاع رسانی
+                        </SheetClose>
+                      </Link>
+                      <Link href="/dashboard/changepassword">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changepassword" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <LineChart className="h-4 w-4" />
+                          تغییر رمز
+                        </SheetClose>
+                      </Link>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
                 <Link href="/dashboard/publishers">
                   <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/publishers" ? "bg-muted text-primary" : ""}`}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/pulishers" ? "bg-muted text-primary" : ""}`}
                   >
                     <Package className="h-4 w-4" />
                     پنل ویژه ناشرین
                   </SheetClose>
                 </Link>
-                <Link href="/dashboard/balancehistory">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/balancehistory" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <Package className="h-4 w-4" />
-                    تاریخچه موجودی
-                  </SheetClose>
-                </Link>
                 <Link href="/dashboard/contactmanagement">
                   <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/contactmanagement" ? "bg-muted text-primary" : ""}`}
+                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/contactmanagement" ? "bg-muted text-primary" : ""}`}
                   >
                     <Package className="h-4 w-4" />
                     ارتباط با مدیریت
                   </SheetClose>
                 </Link>
-                <Link href="/dashboard/points">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/points" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <Package className="h-4 w-4" />
-                    امتیازت من
-                  </SheetClose>
-                </Link>
-                <Link href="/dashboard/changeinfo">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <Users className="h-4 w-4" />
-                    تغییر مشخصات اکانت
-                  </SheetClose>
-                </Link>
-                <Link href="/dashboard/changenumber">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/changenumber" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <LineChart className="h-4 w-4" />
-                    تغییر شماره اطلاع رسانی
-                  </SheetClose>
-                </Link>
-                <Link href="/dashboard/changepassword">
-                  <SheetClose
-                    className={`flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground ${pathname === "/dashboard/changepassword" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <LineChart className="h-4 w-4" />
-                    تغییر رمز
-                  </SheetClose>
-                </Link>
                 <Link href="/">
-                  <SheetClose className="flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground text-red-500 hover:text-foreground">
+                  <SheetClose className="flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground text-red-500">
                     <LineChart className="h-4 w-4" />
                     خروج
                   </SheetClose>
