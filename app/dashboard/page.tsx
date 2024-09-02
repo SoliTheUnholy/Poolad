@@ -1,3 +1,7 @@
 export default function Dashboard() {
-  return <>در حال ساخت</>;
+  return (
+    <>
+      <h1>در حال ساخت</h1>
+    </>
+  );
 }
