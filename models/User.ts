@@ -1,19 +1,18 @@
 import mongoose, { Schema, model } from "mongoose";
 
-export interface UserDocument {
+export interface userDocument {
   _id: string;
-  email: string;
-  password: string;
-  number: string;
   name: string;
-  fname: string;
-  phone: string;
-  avatar: string;
+  number: string;
+  password: string;
+  code: string;
+  address: string;
+  zipCode: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const UserSchema = new Schema<UserDocument>(
+const userSchema = new Schema<userDocument>(
   {
     number: {
       type: String,
@@ -30,6 +29,5 @@ const UserSchema = new Schema<UserDocument>(
   },
 );
 
-const User =
-  mongoose.models?.User || model<UserDocument>("User", UserSchema, "User");
-export default User;
+const user = mongoose.models?.user || model<userDocument>("user", userSchema);
+export default user;

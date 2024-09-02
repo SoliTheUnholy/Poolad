@@ -1,10 +1,11 @@
 "use server";
 import { connectDB } from "@/lib/mongodb";
-import User from "@/models/User";
+import User from "@/models/user";
 import bcrypt from "bcryptjs";
+import { signIn } from "next-auth/react";
 
 export const register = async (values: any) => {
-  const { password, number, avatar } = values;
+  const { password, number } = values;
   try {
     await connectDB();
     const Euser = await User.findOne({ number });
@@ -17,9 +18,10 @@ export const register = async (values: any) => {
     const user = new User({
       number,
       password: hashedPassword,
-      avatar
     });
-    const savedUser = await user.save();
+    const savedUser = await user
+      .save()
+      .then(signIn("credentials", { number, password: hashedPassword }));
   } catch (e: any) {
     return {
       error: e.message,

@@ -1,6 +1,14 @@
 "use client";
 import Image from "next/image";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   Accordion,
   AccordionContent,
@@ -44,8 +52,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import NewOrder from "@/components/neworder";
+import { useRouter } from "next/navigation";
 
 export default function UserLayout({
   children,
@@ -54,6 +63,10 @@ export default function UserLayout({
 }>) {
   const session = useSession();
   const pathname = usePathname();
+  const router = useRouter();
+  if (session.status !== "authenticated") {
+    router.push("/home");
+  }
   const options = { year: "numeric", month: "long", day: "numeric" };
   const Today = new Date().toLocaleDateString("fa-IR", options as any);
   return (
@@ -63,12 +76,8 @@ export default function UserLayout({
           <div className="flex h-[7vh] items-center border-b px-4 lg:h-[7vh] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
               <Package2 className="h-6 w-6" />
-              <span className="">مجتمع چاپ دیجیتال ناژو</span>
+              <span className="">تعاونی پولاد سقف </span>
             </Link>
-            <Button variant="outline" size="icon" className="mr-auto h-8 w-8">
-              <Bell className="h-4 w-4" />
-              <span className="sr-only">Toggle notifications</span>
-            </Button>
           </div>
           <div className="flex h-[93vh] flex-col justify-between overflow-y-scroll">
             <nav className="mt-2 grid items-start px-2 text-sm font-medium lg:px-4">
@@ -110,43 +119,6 @@ export default function UserLayout({
                       <PackageSearch className="h-4 w-4" />
                       لیست سفارشات
                     </Link>
-                    <Link
-                      href="/dashboard/files"
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/files" ? "bg-muted text-primary" : ""}`}
-                    >
-                      <Package className="h-4 w-4" />
-                      مدیریت فایلها
-                    </Link>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-              <Accordion
-                type="single"
-                collapsible
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
-              >
-                <AccordionItem value="item-1" className="w-full">
-                  <AccordionTrigger>
-                    <span className="flex w-max items-center gap-3">
-                      <PackagePlus className="h-4 w-4" />
-                      کیف پول
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <Link
-                      href="/dashboard/addfunds"
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/addfunds" ? "bg-muted text-primary" : ""}`}
-                    >
-                      <Package className="h-4 w-4" />
-                      شارژ حساب
-                    </Link>
-                    <Link
-                      href="/dashboard/balancehistory"
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/balancehistory" ? "bg-muted text-primary" : ""}`}
-                    >
-                      <Package className="h-4 w-4" />
-                      تاریخچه موجودی
-                    </Link>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -164,25 +136,11 @@ export default function UserLayout({
                   </AccordionTrigger>
                   <AccordionContent>
                     <Link
-                      href="/dashboard/points"
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/points" ? "bg-muted text-primary" : ""}`}
-                    >
-                      <Package className="h-4 w-4" />
-                      امتیازت من
-                    </Link>
-                    <Link
                       href="/dashboard/changeinfo"
                       className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
                     >
                       <Users className="h-4 w-4" />
                       تغییر مشخصات اکانت
-                    </Link>
-                    <Link
-                      href="/dashboard/changenumber"
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changenumber" ? "bg-muted text-primary" : ""}`}
-                    >
-                      <LineChart className="h-4 w-4" />
-                      تغییر شماره اطلاع رسانی
                     </Link>
                     <Link
                       href="/dashboard/changepassword"
@@ -195,44 +153,14 @@ export default function UserLayout({
                 </AccordionItem>
               </Accordion>
               <Link
-                href="/dashboard/publishers"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/publishers" ? "bg-muted text-primary" : ""}`}
-              >
-                <Package className="h-4 w-4" />
-                پنل ویژه ناشرین
-              </Link>
-
-              <Link
-                href="/dashboard/contactmanagement"
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/contactmanagement" ? "bg-muted text-primary" : ""}`}
-              >
-                <Package className="h-4 w-4" />
-                ارتباط با مدیریت
-              </Link>
-              <Link
-                href="/"
+                onClick={() => signOut()}
+                href="/home"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground text-red-500 transition-all hover:text-primary"
               >
                 <LineChart className="h-4 w-4" />
                 خروج
               </Link>
             </nav>
-            <div className="p-4">
-              <Card>
-                <CardHeader className="p-2 pt-0 md:p-4">
-                  <CardTitle>پشتیبانی آنلاین</CardTitle>
-                  <CardDescription>
-                    ارتباط انلاین با کارشناسان ما صبح 9 الی 13 و عصر 15 الی 18
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-                  <Button size="sm" className="w-full gap-1">
-                    <MessageSquare className="h-4 w-4" />
-                    شروع گفتگو
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
           </div>
         </div>
       </div>
@@ -253,22 +181,14 @@ export default function UserLayout({
               side="right"
               className="flex flex-col overflow-y-scroll"
             >
-              <section className="mt-7 flex justify-between">
+              <section className="mt-10 flex justify-between">
                 <Link
                   href="/"
                   className="flex items-center gap-2 font-semibold"
                 >
                   <Package2 className="h-6 w-6" />
-                  <span className="">مجتمع چاپ دیجیتال ناژو</span>
+                  <span className=""> تعاونی پولاد سقف</span>
                 </Link>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="mr-auto h-8 w-8"
-                >
-                  <Bell className="h-4 w-4" />
-                  <span className="sr-only">Toggle notifications</span>
-                </Button>
               </section>
               <nav className="grid gap-2 text-lg font-medium">
                 <Link href="/dashboard">
@@ -292,14 +212,27 @@ export default function UserLayout({
                       </span>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <Link href="/dashboard/neworder">
-                        <SheetClose
-                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/neworder" ? "bg-muted text-primary" : ""}`}
-                        >
-                          <PackagePlus className="h-4 w-4" />
-                          ثبت سفارش جدید
-                        </SheetClose>
-                      </Link>
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <SheetClose className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
+                            <PackagePlus className="h-4 w-4" />
+                            ثبت سفارش جدید
+                          </SheetClose>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px]">
+                          <DialogHeader>
+                            <DialogTitle>ثبت سفارش جدید</DialogTitle>
+                            <DialogDescription>
+                              Make changes to your profile here. Click save when
+                              re done.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <NewOrder></NewOrder>
+                          <DialogFooter>
+                            <Button type="submit">Save changes</Button>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                       <Link href="/dashboard/orderslist">
                         <SheetClose
                           className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderslist" ? "bg-muted text-primary" : ""}`}
@@ -328,64 +261,16 @@ export default function UserLayout({
                     <AccordionTrigger>
                       <span className="flex w-max items-center gap-3">
                         <PackagePlus className="h-4 w-4" />
-                        کیف پول
-                      </span>
-                    </AccordionTrigger>
-                    <AccordionContent>
-                      <Link href="/dashboard/addfunds">
-                        <SheetClose
-                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/addfunds" ? "bg-muted text-primary" : ""}`}
-                        >
-                          <Package className="h-4 w-4" />
-                          شارژ حساب
-                        </SheetClose>
-                      </Link>
-                      <Link href="/dashboard/balancehistory">
-                        <SheetClose
-                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/balancehistory" ? "bg-muted text-primary" : ""}`}
-                        >
-                          <Package className="h-4 w-4" />
-                          تاریخچه موجودی
-                        </SheetClose>
-                      </Link>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-                <Accordion
-                  type="single"
-                  collapsible
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
-                >
-                  <AccordionItem value="item-1" className="w-full">
-                    <AccordionTrigger>
-                      <span className="flex w-max items-center gap-3">
-                        <PackagePlus className="h-4 w-4" />
                         اطلاعات کاربر
                       </span>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <Link href="/dashboard/points">
-                        <SheetClose
-                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/points" ? "bg-muted text-primary" : ""}`}
-                        >
-                          <Package className="h-4 w-4" />
-                          امتیازت من
-                        </SheetClose>
-                      </Link>
                       <Link href="/dashboard/changeinfo">
                         <SheetClose
                           className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
                         >
                           <Users className="h-4 w-4" />
                           تغییر مشخصات اکانت
-                        </SheetClose>
-                      </Link>
-                      <Link href="/dashboard/changenumber">
-                        <SheetClose
-                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changenumber" ? "bg-muted text-primary" : ""}`}
-                        >
-                          <LineChart className="h-4 w-4" />
-                          تغییر شماره اطلاع رسانی
                         </SheetClose>
                       </Link>
                       <Link href="/dashboard/changepassword">
@@ -399,80 +284,32 @@ export default function UserLayout({
                     </AccordionContent>
                   </AccordionItem>
                 </Accordion>
-                <Link href="/dashboard/publishers">
-                  <SheetClose
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/pulishers" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <Package className="h-4 w-4" />
-                    پنل ویژه ناشرین
-                  </SheetClose>
-                </Link>
-                <Link href="/dashboard/contactmanagement">
-                  <SheetClose
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/contactmanagement" ? "bg-muted text-primary" : ""}`}
-                  >
-                    <Package className="h-4 w-4" />
-                    ارتباط با مدیریت
-                  </SheetClose>
-                </Link>
-                <Link href="/">
+                <Link
+                  href="/home"
+                  onClick={() => {
+                    signOut();
+                  }}
+                >
                   <SheetClose className="flex w-full items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground text-red-500">
                     <LineChart className="h-4 w-4" />
                     خروج
                   </SheetClose>
                 </Link>
               </nav>
-              <div className="mt-auto">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>پشتیبانی آنلاین</CardTitle>
-                    <CardDescription>
-                      ارتباط انلاین با کارشناسان ما صبح 9 الی 13 و عصر 15 الی 18
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <SheetClose>
-                      <Button size="sm" className="flex w-full gap-4">
-                        <MessageSquare className="h-5 w-5" />
-                        شروع گفتگو
-                      </Button>
-                    </SheetClose>
-                  </CardContent>
-                </Card>
-              </div>
             </SheetContent>
           </Sheet>
           <span className="text-sm text-muted-foreground">{Today}</span>
-          <div className="relative">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="rounded-full"
-                >
-                  <img src={"session.data?.avatar"} alt={""}></img>
-                  <span className="sr-only">Toggle user menu</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="mx-3">
-                <DropdownMenuLabel>سهیل</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>تنظیمات</DropdownMenuItem>
-                <DropdownMenuItem>تغییر رمز</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-red-500">
-                  خروج
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+          <div>
+            <Link href={"/home"}>
+              <Button>بازگشت به سایت</Button>
+            </Link>
           </div>
         </header>
         <section className="relative">
           <section className="absolute flex h-[93vh] w-full flex-col gap-4 overflow-x-hidden overflow-y-scroll p-4 lg:gap-8 lg:p-8">
             {children}
           </section>
-          <div className="h-[93vh] w-full bg-[url('/bg-tile.jpg')] bg-repeat object-cover"></div>
+          <div className="h-[93vh] w-full object-cover"></div>
         </section>
       </div>
     </div>
