@@ -1,3 +1,3 @@
 export default function Dashboard() {
-  return <>dd</>;
+  return <>در حال ساخت</>;
 }
