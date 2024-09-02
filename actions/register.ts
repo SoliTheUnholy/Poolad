@@ -1,6 +1,6 @@
 "use server";
 import { connectDB } from "@/lib/mongodb";
-import User from "@/models/user";
+import User from "@/models/users";
 import bcrypt from "bcryptjs";
 import { signIn } from "next-auth/react";
 
