@@ -306,6 +306,7 @@ export default function UserLayout({
           </div>
         </header>
         <section className="relative">
+          <div className="fixed -z-50 h-screen w-screen bg-[url('/pattern2.png')] bg-repeat opacity-25"></div>
           <section className="absolute flex h-[93vh] w-full flex-col gap-4 overflow-x-hidden overflow-y-scroll p-4 lg:gap-8 lg:p-8">
             {children}
           </section>
