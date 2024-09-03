@@ -2,7 +2,7 @@ import Image from "next/image";
 export default function Lattice() {
   return (
     <>
-      <div className="relative -skew-x-6 -skew-y-6 scale-110">
+      <div className="relative flex aspect-square skew-x-6 skew-y-6 scale-x-[-1] items-center">
         <Image
           className="absolute object-cover"
           width={1500}
