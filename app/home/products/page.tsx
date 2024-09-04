@@ -12,19 +12,21 @@ import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useState } from "react";
+import { LatticeForm } from "@/components/latticeForm";
+import { Separator } from "@/components/ui/separator";
 export default function ProductsPage() {
   const [current, setCurrent] = useState(2);
   const [hidden, setHidden] = useState(false);
   return (
     <>
       <Container>
-        <div className="-mt-2 h-[85svh] overflow-hidden rounded-xl bg-muted md:-mt-4 lg:-mt-8">
+        <div className="-mt-2 grid justify-center h-min min-h-[85svh] items-center overflow-hidden rounded-xl bg-muted sm:grid-cols-3 sm:flex-row md:-mt-4 lg:-mt-8">
           <Button
-            className={`absolute ${hidden ? "" : "hidden"} bottom-8 end-8 z-20 gap-2 rounded-xl`}
+            className={`absolute ${hidden ? "" : "hidden"} bottom-8 end-8 z-30 gap-2 rounded-xl`}
             onClick={() => setHidden(false)}
           >
             <ArrowLeftIcon />
-            <span>انتخاب محصول</span>
+            <span> محصولات</span>
           </Button>
           <Button
             className={`absolute start-3/4 top-1/2 ${hidden && current !== 0 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} z-20 h-14 w-14 rounded-full`}
@@ -35,7 +37,7 @@ export default function ProductsPage() {
           </Button>
           <Card
             onClick={() => setCurrent(1)}
-            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 1 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl ring-2 ring-primary [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${current === 2 ? "start-full translate-x-full" : ""} ${current === 3 ? "start-0" : ""} ${hidden && current === 1 ? "start-full translate-x-full scale-90 bg-transparent ring-0 -mt-10 shadow-none drop-shadow-md" : ""} ${hidden && current !== 1 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
+            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 1 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl ring-2 ring-primary [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${current === 2 ? "start-full translate-x-full" : ""} ${current === 3 ? "start-0" : ""} ${hidden && current === 1 ? "relative start-0 mt-4 top-0 translate-x-0 translate-y-0 col-span-1 p-8 w-fit  bg-transparent shadow-none ring-0 drop-shadow-md" : ""} ${hidden && current !== 1 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
           >
             <CardHeader className="text-xl text-foreground sm:text-2xl md:text-4xl">
               <CardTitle>خرپا</CardTitle>
@@ -47,7 +49,7 @@ export default function ProductsPage() {
           </Card>
           <Card
             onClick={() => setCurrent(2)}
-            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 2 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl ring-2 ring-primary [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${current === 3 ? "start-full translate-x-full" : ""} ${current === 1 ? "start-0" : ""} ${hidden && current === 2 ? "start-full translate-x-full scale-90 bg-transparent ring-0 -mt-10 shadow-none drop-shadow-md" : ""} ${hidden && current !== 2 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
+            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 2 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl ring-2 ring-primary [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${current === 3 ? "start-full translate-x-full" : ""} ${current === 1 ? "start-0" : ""} ${hidden && current === 2 ? "relative start-0 mt-4 top-0 translate-x-0 translate-y-0 col-span-1 p-8 w-fit bg-transparent shadow-none ring-0 drop-shadow-md" : ""} ${hidden && current !== 2 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
           >
             <CardHeader className="text-xl text-foreground sm:text-2xl md:text-4xl">
               <CardTitle className="">کلاف</CardTitle>
@@ -65,7 +67,7 @@ export default function ProductsPage() {
           </Card>
           <Card
             onClick={() => setCurrent(3)}
-            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 3 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl ring-2 ring-primary [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${hidden && current === 3 ? "start-full translate-x-full scale-90 bg-transparent ring-0 -mt-10 shadow-none drop-shadow-md" : ""} ${hidden && current !== 3 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} ${current === 1 ? "start-full translate-x-full" : ""} ${current === 2 ? "start-0" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
+            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 3 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl ring-2 ring-primary [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${hidden && current === 3 ? "relative start-0 mt-4 top-0 translate-x-0 translate-y-0 col-span-1 p-8 w-fit bg-transparent shadow-none ring-0 drop-shadow-md" : ""} ${hidden && current !== 3 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} ${current === 1 ? "start-full translate-x-full" : ""} ${current === 2 ? "start-0" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
           >
             <CardHeader className="text-xl text-foreground sm:text-2xl md:text-4xl">
               <CardTitle>کلاف کشیده</CardTitle>
@@ -89,12 +91,15 @@ export default function ProductsPage() {
             <span className="sr-only">Next slide</span>
           </Button>
           <Button
-            className="absolute bottom-8 start-8 z-20 gap-2 rounded-xl"
+            className={`absolute ${hidden ? "hidden" : ""} bottom-8 start-8 z-20 gap-2 rounded-xl`}
             onClick={() => setHidden(true)}
           >
             <ArrowRightIcon />
-            <span>{hidden ? "فاکتور" : "ثبت سفارش"}</span>
+            <span>ثبت سفارش</span>
           </Button>
+          <div className={`sm:col-span-2 ${hidden ? "" : "hidden"} z-20 w-full`}>
+            <LatticeForm />
+          </div>
         </div>
       </Container>
     </>
