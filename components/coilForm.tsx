@@ -314,7 +314,7 @@ export function LatticeForm() {
         />
         <Button type="submit" className="mt-auto w-min">
           <ArrowRightIcon />
-          فاکتور
+         فاکتور
         </Button>
       </form>
     </Form>
