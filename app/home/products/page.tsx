@@ -37,7 +37,7 @@ export default function ProductsPage() {
           </Button>
           <Card
             onClick={() => setCurrent(1)}
-            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 1 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${current === 2 ? "start-full translate-x-full" : ""} ${current === 3 ? "start-0" : ""} ${hidden && current === 1 ? "relative start-0 top-0 col-span-1 m-8 w-full translate-x-0 translate-y-0 scale-100 bg-transparent shadow-none drop-shadow-md" : ""} ${hidden && current !== 1 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
+            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 1 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${current === 2 ? "start-full translate-x-full" : ""} ${current === 3 ? "start-0" : ""} ${hidden && current === 1 ? "relative start-0 top-0 col-span-1 w-full translate-x-0 translate-y-0 scale-100 bg-transparent shadow-none drop-shadow-md" : ""} ${hidden && current !== 1 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
           >
             <CardHeader className="text-xl text-foreground sm:text-2xl">
               <CardTitle>خرپا</CardTitle>
@@ -49,7 +49,7 @@ export default function ProductsPage() {
           </Card>
           <Card
             onClick={() => setCurrent(2)}
-            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 2 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${current === 3 ? "start-full translate-x-full" : ""} ${current === 1 ? "start-0" : ""} ${hidden && current === 2 ? "relative start-0 top-0 col-span-1 m-8 w-full translate-x-0 translate-y-0 scale-100 bg-transparent shadow-none drop-shadow-md" : ""} ${hidden && current !== 2 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
+            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 2 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${current === 3 ? "start-full translate-x-full" : ""} ${current === 1 ? "start-0" : ""} ${hidden && current === 2 ? "relative start-0 top-0 col-span-1 w-full translate-x-0 translate-y-0 scale-100 bg-transparent shadow-none drop-shadow-md" : ""} ${hidden && current !== 2 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
           >
             <CardHeader className="text-xl text-foreground sm:text-2xl">
               <CardTitle className="">کلاف</CardTitle>
@@ -67,7 +67,7 @@ export default function ProductsPage() {
           </Card>
           <Card
             onClick={() => setCurrent(3)}
-            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 3 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${hidden && current === 3 ? "relative start-0 top-0 col-span-1 m-8 w-full translate-x-0 translate-y-0 scale-100 bg-transparent shadow-none drop-shadow-md" : ""} ${hidden && current !== 3 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} ${current === 1 ? "start-full translate-x-full" : ""} ${current === 2 ? "start-0" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
+            className={`absolute z-0 grid h-min w-[50vw] max-w-96 -translate-y-1/2 scale-75 overflow-hidden bg-opacity-10 backdrop-blur-none transition-all duration-500 ${current === 3 ? "start-1/2 top-1/2 z-10 translate-x-1/2 scale-125 shadow-xl [&_img]:brightness-150" : "top-1/4 w-[45vw]"} ${hidden && current === 3 ? "relative start-0 top-0 col-span-1 w-full translate-x-0 translate-y-0 scale-100 bg-transparent shadow-none drop-shadow-md" : ""} ${hidden && current !== 3 ? "top-0 scale-0 opacity-0 transition-all duration-500" : ""} ${current === 1 ? "start-full translate-x-full" : ""} ${current === 2 ? "start-0" : ""} [&_img]:transition-all [&_img]:duration-500 [&_img]:hover:-skew-y-6 [&_img]:hover:skew-x-6 [&_img]:hover:scale-110`}
           >
             <CardHeader className="text-xl text-foreground sm:text-2xl">
               <CardTitle>کلاف کشیده</CardTitle>
