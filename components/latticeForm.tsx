@@ -289,8 +289,8 @@ export function LatticeForm() {
               <FormLabel>مقدار</FormLabel>
               <FormControl>
                 <Input
-                  onChangeCapture={() => setPrice(Number(field.value))}
-                  onKeyUp={() => setPrice(Number(field.value))}
+                  onChangeCapture={() => setPrice(field.value)}
+                  onKeyUp={() => setPrice(field.value)}
                   type="number"
                   placeholder=""
                   {...field}
@@ -313,8 +313,8 @@ export function LatticeForm() {
           )}
         />
         <Button type="submit" className="mt-auto w-min">
-          <ArrowRightIcon />
-          فاکتور
+          <ArrowRightIcon />ظ
+         فاکتور
         </Button>
       </form>
     </Form>

@@ -37,8 +37,14 @@ import { useState } from "react";
 import { Separator } from "./ui/separator";
 
 const diameter = [
+  { label: "4", value: "4" },
+  { label: "4.2", value: "4.2" },
+  { label: "4.4", value: "4.4" },
+  { label: "4.6", value: "4.6" },
+  { label: "4.7", value: "4.7" },
+  { label: "5", value: "5" },
   { label: "5.5", value: "5.5" },
-  { label: "6.5", value: "6.5" },
+  { label: "6", value: "6" },
   { label: "8", value: "8" },
   { label: "10", value: "10" },
   { label: "12", value: "12" },
@@ -49,24 +55,12 @@ const ribbed = [
   { label: "ساده", value: "false" },
 ] as const;
 
-const type = [
-  { label: "AII", value: "AII" },
-  { label: "AIII", value: "AIII" },
-  { label: "3SP", value: "3SP" },
-  { label: "RST", value: "RST" },
-  { label: "1008", value: "1008" },
-  { label: "1006", value: "1006" },
-] as const;
-
 const FormSchema = z.object({
   diameter: z.string({
     required_error: "قطر را انتخاب کنید",
   }),
   ribbed: z.string({
     required_error: " آجدار بودن را انتخاب کنید",
-  }),
-  type: z.string({
-    required_error: "نوع کلاف را انتخاب کنید",
   }),
   weight: z.string({
     required_error: "مقدار را وارد کنید",
@@ -75,7 +69,7 @@ const FormSchema = z.object({
 
 const promise = () =>
   new Promise((resolve) => setTimeout(() => resolve({ name: "Sonner" }), 2000));
-export function CoilForm() {
+export function DrawnForm() {
   const [price, setPrice] = useState(0);
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -221,65 +215,6 @@ export function CoilForm() {
           )}
         />
         <Separator />
-        <FormField
-          control={form.control}
-          name="type"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>نوع</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-[200px] justify-between",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      {field.value
-                        ? type.find((type) => type.value === field.value)?.label
-                        : "انتخاب کنید"}
-                      <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="جستجو" className="h-9" />
-                    <CommandList>
-                      <CommandEmpty>محصول موجود نیست</CommandEmpty>
-                      <CommandGroup>
-                        {type.map((type) => (
-                          <CommandItem
-                            value={type.label}
-                            key={type.value}
-                            onSelect={() => {
-                              form.setValue("type", type.value);
-                            }}
-                          >
-                            {type.label}
-                            <CheckIcon
-                              className={cn(
-                                "ml-auto h-4 w-4",
-                                type.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0",
-                              )}
-                            />
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-              <FormDescription> نوع کلاف </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="weight"

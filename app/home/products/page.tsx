@@ -14,6 +14,8 @@ import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import { useState } from "react";
 import { LatticeForm } from "@/components/latticeForm";
 import { Separator } from "@/components/ui/separator";
+import { CoilForm } from "@/components/coilForm";
+import { DrawnForm } from "@/components/drawnForm";
 export default function ProductsPage() {
   const [current, setCurrent] = useState(2);
   const [hidden, setHidden] = useState(false);
@@ -100,7 +102,9 @@ export default function ProductsPage() {
           <div
             className={`sm:col-span-2 ${hidden ? "" : "hidden"} z-20 w-full`}
           >
-            <LatticeForm />
+            {current === 1 && <LatticeForm />}
+            {current === 2 && <CoilForm />}
+            {current === 3 && <DrawnForm />}
           </div>
         </div>
       </Container>

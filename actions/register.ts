@@ -11,7 +11,7 @@ export const register = async (values: any) => {
     const Euser = await User.findOne({ number });
     if (Euser) {
       return {
-        error: "Number is used",
+        error: "شماره قبلا استفاده شده",
       };
     }
     const hashedPassword = await bcrypt.hash(password, 10);
