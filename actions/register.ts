@@ -24,8 +24,7 @@ export const register = async (values: any) => {
       .then(signIn("credentials", { number, password: hashedPassword }));
   } catch (e: any) {
     return {
-      error: e.message,
+      error: "اتصال برقرار نشد.",
     };
   }
 };
-

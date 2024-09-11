@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,102 +29,77 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { toast } from "sonner";
-import { ArrowRightIcon, Weight } from "lucide-react";
-import { Input } from "./ui/input";
-import { useEffect, useState } from "react";
-import { Separator } from "./ui/separator";
-import { availability } from "@/actions/availability";
+import { ArrowRightIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { latticeAdd } from "@/actions/latticeAdd";
+
+const heights = [
+  { label: "پله", value: "15" },
+  { label: "20", value: "20" },
+  { label: "25", value: "25" },
+  { label: "30", value: "30" },
+  { label: "35", value: "35" },
+] as const;
+
+const tops = [
+  { label: "8", value: "8" },
+  { label: "10", value: "10" },
+  { label: "12", value: "12" },
+] as const;
+
+const bottoms = [
+  { label: "8", value: "8" },
+  { label: "10", value: "10" },
+  { label: "12", value: "12" },
+] as const;
 
 const FormSchema = z.object({
-  height: z.number({
+  heights: z.string({
     required_error: "ارتفاع را انتخاب کنید",
   }),
-  top: z.number({
+  tops: z.string({
     required_error: "قطر راس را انتخاب کنید",
   }),
-  bottom: z.number({
+  bottoms: z.string({
     required_error: "قطر قائده را انتخاب کنید",
   }),
-  weight: z.number({
-    required_error: "مقدار را وارد کنید",
-  }),
-  price: z.number({
+  price: z.string({
     required_error: "مقدار را وارد کنید",
   }),
 });
-
-const promise = () =>
-  new Promise((resolve) => setTimeout(() => resolve({ name: "Sonner" }), 2000));
-
-export function LatticeForm() {
-  const [weight, setW] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [availableHeights, setH] = useState<number[]>([]);
-  const [availableTops, setT] = useState<number[]>([]);
-  const [availableBottoms, setB] = useState<number[]>([]);
-  const products = async () => {
-    availability(1, [{ ...form.getValues() }, {}]).then((data: any) => {
-      setH([]);
-      setT([]);
-      setB([]);
-      data.map((pro: any) => {
-        setH((prev) => [...prev, pro.height]);
-        setT((prev) => [...prev, pro.top]);
-        setB((prev) => [...prev, pro.bottom]);
-      });
-      if (Object.keys(data).length == 1) {
-        setPrice(data[0].price);
-        console.log(weight);
-      } else {
-        setPrice(0);
-      }
-    });
-  };
-  const height = [
-    { label: "پله", value: "15" },
-    { label: "20", value: "20" },
-    { label: "25", value: "25" },
-    { label: "30", value: "30" },
-    { label: "35", value: "35" },
-  ] as const;
-
-  const top = [
-    { label: "8", value: "8" },
-    { label: "10", value: "10" },
-    { label: "12", value: "12" },
-  ] as const;
-
-  const bottom = [
-    { label: "8", value: "8" },
-    { label: "10", value: "10" },
-    { label: "12", value: "12" },
-  ] as const;
-
+async function onSubmit(values: z.infer<typeof FormSchema>) {
+  const r = new Promise((resolve) =>
+    resolve(
+      latticeAdd({
+        height: Number(values.heights),
+        top: Number(values.tops),
+        bottom: Number(values.bottoms),
+        price: Number(values.price),
+      }),
+    ),
+  );
+  toast.promise(r, {
+    loading: "در حال ثبت ...",
+    success: () => {
+      return "محصول ثبت شد";
+    },
+    error: "ناموفق",
+  });
+  location.reload();
+}
+export default function LatticeAddForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
-  function onSubmit() {
-    toast.promise(promise, {
-      loading: "در حال ثبت ...",
-      success: () => {
-        return "سفارش شما ثبت شد";
-      },
-      error: "ناموفق",
-    });
-  }
   return (
     <Form {...form}>
       <form
-        onFocus={() => products()}
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex min-h-[85svh] w-full flex-col justify-between gap-4 p-8"
+        className="grid grid-cols-1 grid-rows-5 items-start justify-center p-8 lg:grid-cols-5 lg:grid-rows-1 lg:pb-0"
       >
-        <Separator className="block sm:hidden" />
-
         <FormField
           control={form.control}
-          name="height"
+          name="heights"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>ارتفاع</FormLabel>
@@ -134,44 +110,38 @@ export function LatticeForm() {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "min-w-28 justify-between lg:rounded-l-none",
                         !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
-                        ? height.find(
-                            (height: any) =>
-                              Number(height.value) === field.value,
+                        ? heights.find(
+                            (heights) => heights.value === field.value,
                           )?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-28 p-0">
                   <Command>
                     <CommandInput placeholder="جستجو" className="h-9" />
                     <CommandList>
                       <CommandEmpty>محصول موجود نیست</CommandEmpty>
                       <CommandGroup>
-                        {height.map((height: any) => (
+                        {heights.map((heights) => (
                           <CommandItem
-                            disabled={
-                              availableHeights.includes(Number(height.value))
-                                ? false
-                                : true
-                            }
-                            value={height.label}
-                            key={height.value}
+                            value={heights.label}
+                            key={heights.value}
                             onSelect={() => {
-                              form.setValue("height", Number(height.value));
+                              form.setValue("heights", heights.value);
                             }}
                           >
-                            {height.label}
+                            {heights.label}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                Number(height.value) === field.value
+                                heights.value === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -183,15 +153,14 @@ export function LatticeForm() {
                   </Command>
                 </PopoverContent>
               </Popover>
-              <FormDescription>ارتفاع خرپا</FormDescription>
+              <FormDescription>ارتفاع خرپا </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Separator />
         <FormField
           control={form.control}
-          name="top"
+          name="tops"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>قطر میله راس</FormLabel>
@@ -202,42 +171,36 @@ export function LatticeForm() {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "min-w-28 justify-between lg:rounded-none",
                         !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
-                        ? top.find((top) => Number(top.value) === field.value)
-                            ?.label
+                        ? tops.find((tops) => tops.value === field.value)?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-28 p-0">
                   <Command>
                     <CommandInput placeholder="جستجو" className="h-9" />
                     <CommandList>
                       <CommandEmpty>محصول موجود نیست</CommandEmpty>
                       <CommandGroup>
-                        {top.map((top) => (
+                        {tops.map((tops) => (
                           <CommandItem
-                            disabled={
-                              availableTops.includes(Number(top.value))
-                                ? false
-                                : true
-                            }
-                            value={top.label}
-                            key={top.value}
+                            value={tops.label}
+                            key={tops.value}
                             onSelect={() => {
-                              form.setValue("top", Number(top.value));
+                              form.setValue("tops", tops.value);
                             }}
                           >
-                            {top.label}
+                            {tops.label}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                Number(top.value) === field.value
+                                tops.value === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -254,10 +217,9 @@ export function LatticeForm() {
             </FormItem>
           )}
         />
-        <Separator />
         <FormField
           control={form.control}
-          name="bottom"
+          name="bottoms"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>قطر میله های قائده</FormLabel>
@@ -268,43 +230,38 @@ export function LatticeForm() {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "min-w-28 justify-between lg:rounded-none",
                         !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
-                        ? bottom.find(
-                            (bottom) => Number(bottom.value) === field.value,
+                        ? bottoms.find(
+                            (bottoms) => bottoms.value === field.value,
                           )?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-28 p-0">
                   <Command>
                     <CommandInput placeholder="جستجو" className="h-9" />
                     <CommandList>
                       <CommandEmpty>محصول موجود نیست</CommandEmpty>
                       <CommandGroup>
-                        {bottom.map((bottom) => (
+                        {bottoms.map((bottoms) => (
                           <CommandItem
-                            disabled={
-                              availableBottoms.includes(Number(bottom.value))
-                                ? false
-                                : true
-                            }
-                            value={bottom.label}
-                            key={bottom.value}
+                            value={bottoms.label}
+                            key={bottoms.value}
                             onSelect={() => {
-                              form.setValue("bottom", Number(bottom.value));
+                              form.setValue("bottoms", bottoms.value);
                             }}
                           >
-                            {bottom.label}
+                            {bottoms.label}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                Number(bottom.value) === field.value
+                                bottoms.value === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -321,42 +278,28 @@ export function LatticeForm() {
             </FormItem>
           )}
         />
-        <Separator />
         <FormField
           control={form.control}
-          name="weight"
+          name="price"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>مقدار</FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel>قیمت</FormLabel>
               <FormControl>
                 <Input
-                  disabled={price === 0}
-                  onKeyUp={() => setW(Number(field.value))}
+                  className="min-w-28 lg:rounded-none"
                   type="number"
                   placeholder=""
                   {...field}
                 />
               </FormControl>
-              <FormDescription>مقدار مورد نظر (کیلوگرم) </FormDescription>
+              <FormDescription>قیمت مورد نظر (تومان) </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Separator />
-        <FormField
-          control={form.control}
-          name="price"
-          render={() => (
-            <FormItem>
-              <FormLabel>{(weight * price).toLocaleString()}</FormLabel>
-              <FormDescription>قیمت محاسبه شده (تومان)</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="mt-auto w-min">
+        <Button type="submit" className="mt-[22px] min-w-28 lg:rounded-r-none">
           <ArrowRightIcon />
-          فاکتور
+          افزودن
         </Button>
       </form>
     </Form>

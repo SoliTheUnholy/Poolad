@@ -64,9 +64,9 @@ export default function UserLayout({
   const session = useSession();
   const pathname = usePathname();
   const router = useRouter();
-  if (session.status !== "authenticated") {
-    router.push("/home");
-  }
+  // if (session.status !== "authenticated") {
+  //   router.push("/home");
+  // }
   const options = { year: "numeric", month: "long", day: "numeric" };
   const Today = new Date().toLocaleDateString("fa-IR", options as any);
   return (
@@ -88,6 +88,43 @@ export default function UserLayout({
                 <Home className="h-4 w-4" />
                 داشبورد
               </Link>
+              <Accordion
+                type="single"
+                collapsible
+                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
+              >
+                <AccordionItem value="item-1" className="w-full">
+                  <AccordionTrigger>
+                    <span className="flex w-max items-center gap-3">
+                      <PackagePlus className="h-4 w-4" />
+                      محصولات
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <Link
+                      href="/dashboard/lattice"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <Users className="h-4 w-4" />
+                      خرپا
+                    </Link>
+                    <Link
+                      href="/dashboard/coil"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <LineChart className="h-4 w-4" />
+                      کلاف
+                    </Link>
+                    <Link
+                      href="/dashboard/drawncoil"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <LineChart className="h-4 w-4" />
+                      کلاف کشیده
+                    </Link>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
               <Accordion
                 type="single"
                 collapsible
@@ -199,6 +236,46 @@ export default function UserLayout({
                     داشبورد
                   </SheetClose>
                 </Link>
+                <Accordion
+                  type="single"
+                  collapsible
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
+                >
+                  <AccordionItem value="item-1" className="w-full">
+                    <AccordionTrigger>
+                      <span className="flex w-max items-center gap-3">
+                        <PackagePlus className="h-4 w-4" />
+                        محصولات
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <Link href="/dashboard/lattice">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <Users className="h-4 w-4" />
+                          خرپا
+                        </SheetClose>
+                      </Link>
+                      <Link href="/dashboard/coil">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changepassword" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <LineChart className="h-4 w-4" />
+                          کلاف
+                        </SheetClose>
+                      </Link>
+                      <Link href="/dashboard/drawncoil">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changepassword" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <LineChart className="h-4 w-4" />
+                          کلاف کشیده
+                        </SheetClose>
+                      </Link>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
                 <Accordion
                   type="single"
                   collapsible

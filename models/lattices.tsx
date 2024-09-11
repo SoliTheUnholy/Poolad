@@ -11,7 +11,24 @@ export interface latticeDocument {
 }
 
 const latticeSchema = new Schema<latticeDocument>(
-  {},
+  {
+    height: {
+      type: Number,
+      required: [true, "Password is required"],
+    },
+    top: {
+      type: Number,
+      required: [true, "Password is required"],
+    },
+    bottom: {
+      type: Number,
+      required: [true, "Password is required"],
+    },
+    price: {
+      type: Number,
+      required: [true, "Password is required"],
+    },
+  },
   {
     timestamps: true,
   },
