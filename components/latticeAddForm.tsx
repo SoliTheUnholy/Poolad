@@ -32,6 +32,7 @@ import { toast } from "sonner";
 import { ArrowRightIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { latticeAdd } from "@/actions/latticeAdd";
+import { useRouter } from "next/navigation";
 
 const heights = [
   { label: "پله", value: "15" },
@@ -67,30 +68,32 @@ const FormSchema = z.object({
     required_error: "مقدار را وارد کنید",
   }),
 });
-async function onSubmit(values: z.infer<typeof FormSchema>) {
-  const r = new Promise((resolve) =>
-    resolve(
-      latticeAdd({
-        height: Number(values.heights),
-        top: Number(values.tops),
-        bottom: Number(values.bottoms),
-        price: Number(values.price),
-      }),
-    ),
-  );
-  toast.promise(r, {
-    loading: "در حال ثبت ...",
-    success: () => {
-      return "محصول ثبت شد";
-    },
-    error: "ناموفق",
-  });
-  location.reload();
-}
+
 export default function LatticeAddForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
+  async function onSubmit(values: z.infer<typeof FormSchema>) {
+    const r = new Promise((resolve) =>
+      resolve(
+        latticeAdd({
+          height: Number(values.heights),
+          top: Number(values.tops),
+          bottom: Number(values.bottoms),
+          price: Number(values.price),
+        }),
+      ),
+    );
+    toast.promise(r, {
+      loading: "در حال ثبت ...",
+      success: () => {
+        return "محصول ثبت شد";
+      },
+      error: "ناموفق",
+    });
+    router.refresh();
+  }
   return (
     <Form {...form}>
       <form

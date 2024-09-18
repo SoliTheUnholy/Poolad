@@ -1,30 +1,26 @@
 "use client";
-import {
-  TableCell,
-} from "@/components/ui/table";
+import { TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { removeProduct } from "@/actions/removeProduct";
 import { useRouter } from "next/navigation";
 
-export default function LatticeTable(props: {
+export default function DrawnTable(props: {
   id: string;
-  height: any;
-  top: any;
-  bottom: any;
-  price: any;
+  diameter: 4 | 4.2 | 4.4 | 4.6 | 4.7 | 5 | 5.5 | 6 | 8 | 10 | 12;
+  ribbed: boolean;
+  price: number;
 }) {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <>
-      <TableCell>{props.height}</TableCell>
-      <TableCell>{props.top}</TableCell>
-      <TableCell>{props.bottom}</TableCell>
+      <TableCell>{props.diameter}</TableCell>
+      <TableCell>{props.ribbed ? "آجدار" : "ساده"}</TableCell>
       <TableCell className="text-right">{props.price}</TableCell>
       <TableCell>
         <Button
           onClick={() => {
-            removeProduct(1, props.id), router.refresh();
+            removeProduct(3, props.id), router.refresh();
           }}
           className="w-full bg-red-500"
         >

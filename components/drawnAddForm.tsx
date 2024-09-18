@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -29,69 +30,76 @@ import {
 } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { ArrowRightIcon } from "lucide-react";
-import { Input } from "./ui/input";
-import { useState } from "react";
-import { Separator } from "./ui/separator";
+import { Input } from "@/components/ui/input";
+import { drawnAdd } from "@/actions/drawnAdd";
+import { useRouter } from "next/navigation";
 
-const diameter = [
-  { label: "4", value: "4" },
-  { label: "4.2", value: "4.2" },
-  { label: "4.4", value: "4.4" },
-  { label: "4.6", value: "4.6" },
-  { label: "4.7", value: "4.7" },
-  { label: "5", value: "5" },
-  { label: "5.5", value: "5.5" },
-  { label: "6", value: "6" },
-  { label: "8", value: "8" },
-  { label: "10", value: "10" },
-  { label: "12", value: "12" },
+
+  const diameters = [
+    { label: "4", value: "4" },
+    { label: "4.2", value: "4.2" },
+    { label: "4.4", value: "4.4" },
+    { label: "4.6", value: "4.6" },
+    { label: "4.7", value: "4.7" },
+    { label: "5", value: "5" },
+    { label: "5.5", value: "5.5" },
+    { label: "6", value: "6" },
+    { label: "8", value: "8" },
+    { label: "10", value: "10" },
+    { label: "12", value: "12" },
+  ] as const;
+
+const ribs = [
+  { label: "آجدار", value: true },
+  { label: "ساده", value: false },
 ] as const;
 
-const ribbed = [
-  { label: "آجدار", value: "true" },
-  { label: "ساده", value: "false" },
-] as const;
 
 const FormSchema = z.object({
-  diameter: z.string({
+  diameters: z.string({
     required_error: "قطر را انتخاب کنید",
   }),
-  ribbed: z.string({
+  ribs: z.boolean({
     required_error: " آجدار بودن را انتخاب کنید",
   }),
-  weight: z.string({
+  price: z.string({
     required_error: "مقدار را وارد کنید",
   }),
 });
 
-const promise = () =>
-  new Promise((resolve) => setTimeout(() => resolve({ name: "Sonner" }), 2000));
-export function DrawnForm() {
-  const [price, setPrice] = useState(0);
+export default function CoilAddForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast.promise(promise, {
+  async function onSubmit(values: z.infer<typeof FormSchema>) {
+    const r = new Promise((resolve) =>
+      resolve(
+        drawnAdd({
+          diameter: Number(values.diameters),
+          ribbed: values.ribs,
+          price: Number(values.price),
+        }),
+      ),
+    );
+    toast.promise(r, {
       loading: "در حال ثبت ...",
       success: () => {
-        return "سفارش شما ثبت شد";
+        return "محصول ثبت شد";
       },
       error: "ناموفق",
     });
+    router.refresh();
   }
-
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex min-h-[85svh] w-full flex-col justify-between gap-4 p-8"
+        className="grid grid-cols-1 grid-rows-4 items-start justify-center p-8 lg:grid-cols-4 lg:grid-rows-1 lg:pb-0"
       >
-        <Separator className="block sm:hidden" />
         <FormField
           control={form.control}
-          name="diameter"
+          name="diameters"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>قطر</FormLabel>
@@ -102,38 +110,38 @@ export function DrawnForm() {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "min-w-28 justify-between lg:rounded-l-none",
                         !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
-                        ? diameter.find(
-                            (diameter) => diameter.value === field.value,
+                        ? diameters.find(
+                            (diameters) => diameters.value === field.value,
                           )?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-28 p-0">
                   <Command>
                     <CommandInput placeholder="جستجو" className="h-9" />
                     <CommandList>
                       <CommandEmpty>محصول موجود نیست</CommandEmpty>
                       <CommandGroup>
-                        {diameter.map((diameter) => (
+                        {diameters.map((diameters) => (
                           <CommandItem
-                            value={diameter.label}
-                            key={diameter.value}
+                            value={diameters.label}
+                            key={diameters.value}
                             onSelect={() => {
-                              form.setValue("diameter", diameter.value);
+                              form.setValue("diameters", diameters.value);
                             }}
                           >
-                            {diameter.label}
+                            {diameters.label}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                diameter.value === field.value
+                                diameters.value === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -150,10 +158,9 @@ export function DrawnForm() {
             </FormItem>
           )}
         />
-        <Separator />
         <FormField
           control={form.control}
-          name="ribbed"
+          name="ribs"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>آجدار</FormLabel>
@@ -164,37 +171,36 @@ export function DrawnForm() {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "min-w-28 justify-between lg:rounded-none",
                         !field.value && "text-muted-foreground",
                       )}
                     >
-                      {field.value
-                        ? ribbed.find((ribbed) => ribbed.value === field.value)
-                            ?.label
+                      {(field.value === true) || field.value === false
+                        ? ribs.find((ribs) => ribs.value === field.value)?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-28 p-0">
                   <Command>
                     <CommandInput placeholder="جستجو" className="h-9" />
                     <CommandList>
                       <CommandEmpty>محصول موجود نیست</CommandEmpty>
                       <CommandGroup>
-                        {ribbed.map((ribbed) => (
+                        {ribs.map((ribs) => (
                           <CommandItem
-                            value={ribbed.label}
-                            key={ribbed.value}
+                            value={ribs.label}
+                            key={String(ribs.value)}
                             onSelect={() => {
-                              form.setValue("ribbed", ribbed.value);
+                              form.setValue("ribs", ribs.value);
                             }}
                           >
-                            {ribbed.label}
+                            {ribs.label}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                ribbed.value === field.value
+                                ribs.value === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -206,46 +212,33 @@ export function DrawnForm() {
                   </Command>
                 </PopoverContent>
               </Popover>
-              <FormDescription>آجدار</FormDescription>
+              <FormDescription>آجدار بودن کلاف</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Separator />
         <FormField
           control={form.control}
-          name="weight"
+          name="price"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>مقدار</FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel>قیمت</FormLabel>
               <FormControl>
                 <Input
-                  onChangeCapture={() => setPrice(Number(field.value))}
-                  onKeyUp={() => setPrice(Number(field.value))}
+                  className="min-w-28 lg:rounded-none"
                   type="number"
                   placeholder=""
                   {...field}
                 />
               </FormControl>
-              <FormDescription>مقدار مورد نظر (کیلوگرم) </FormDescription>
+              <FormDescription>قیمت مورد نظر (تومان) </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Separator />
-        <FormField
-          name="price"
-          render={() => (
-            <FormItem>
-              <FormLabel>{(price * 25000).toString()}</FormLabel>
-              <FormDescription>قیمت محاسبه شده </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="mt-auto w-min">
+        <Button type="submit" className="mt-[22px] min-w-28 lg:rounded-r-none">
           <ArrowRightIcon />
-          فاکتور
+          افزودن
         </Button>
       </form>
     </Form>

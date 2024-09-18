@@ -17,12 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Provider>
-        <body dir="rtl" className={`${Vazirmatn.className} overflow-x-hidden`}>
+      <body dir="rtl" className={`${Vazirmatn.className} overflow-x-hidden`}>
+        <Provider>
           {children}
-        </body>
-        <Toaster />
-      </Provider>
+          <Toaster />
+        </Provider>
+      </body>
     </html>
   );
 }

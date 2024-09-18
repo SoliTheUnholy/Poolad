@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
-import LatticeAddForm from "@/components/latticeAddForm";
-import LatticeTable from "@/components/latticeTable";
+import DrawnAddForm from "@/components/drawnAddForm";
+import DrawnTable from "@/components/drawnTable";
 import { availability } from "@/actions/availability";
 import {
   Table,
@@ -10,34 +10,32 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-export default function LatticePage() {
+export default function drawnPage() {
   return (
     <Card>
-      <LatticeAddForm />
+      <DrawnAddForm />
       <Table className="m-8 grid w-auto lg:mt-0">
         <TableHeader className="lg:hidden">
-          <TableRow className="flex justify-around items-center">
-            <TableHead>ارتفاع</TableHead>
-            <TableHead>راس</TableHead>
-            <TableHead>قائده</TableHead>
+          <TableRow className="flex items-center justify-around">
+            <TableHead>قطر</TableHead>
+            <TableHead>آجدار</TableHead>
             <TableHead>قیمت</TableHead>
             <TableHead>حذف</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {availability(1,[{},{}]).then((data:any) =>
+          {availability(3, [{}, {}]).then((data: any) =>
             data.map((product: any) => (
               <TableRow
-                className="grid grid-cols-5 items-center"
+                className="grid grid-cols-4 items-center"
                 key={product._id}
               >
-                <LatticeTable
+                <DrawnTable
                   id={product._id.toString()}
-                  height={product.height}
-                  top={product.top}
-                  bottom={product.bottom}
+                  diameter={product.diameter}
+                  ribbed={product.ribbed}
                   price={product.price}
-                ></LatticeTable>
+                ></DrawnTable>
               </TableRow>
             )),
           )}

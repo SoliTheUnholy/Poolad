@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card";
-import LatticeAddForm from "@/components/latticeAddForm";
-import LatticeTable from "@/components/latticeTable";
+import CoilAddForm from "@/components/coilAddForm";
+import CoilTable from "@/components/coilTable";
 import { availability } from "@/actions/availability";
 import {
   Table,
@@ -10,34 +10,36 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-export default function LatticePage() {
+export default function coilPage() {
   return (
     <Card>
-      <LatticeAddForm />
+      <CoilAddForm />
       <Table className="m-8 grid w-auto lg:mt-0">
         <TableHeader className="lg:hidden">
-          <TableRow className="flex justify-around items-center">
-            <TableHead>ارتفاع</TableHead>
-            <TableHead>راس</TableHead>
-            <TableHead>قائده</TableHead>
+          <TableRow className="flex items-center justify-around">
+            <TableHead>قطر</TableHead>
+            <TableHead>نوع</TableHead>
+            <TableHead>آجدار</TableHead>
+            <TableHead>تولیدی</TableHead>
             <TableHead>قیمت</TableHead>
             <TableHead>حذف</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {availability(1,[{},{}]).then((data:any) =>
+          {availability(2, [{}, {}]).then((data: any) =>
             data.map((product: any) => (
               <TableRow
-                className="grid grid-cols-5 items-center"
+                className="grid grid-cols-6 items-center"
                 key={product._id}
               >
-                <LatticeTable
+                <CoilTable
                   id={product._id.toString()}
-                  height={product.height}
-                  top={product.top}
-                  bottom={product.bottom}
+                  diameter={product.diameter}
+                  type={product.type}
+                  ribbed={product.ribbed}
+                  producer={product.producer}
                   price={product.price}
-                ></LatticeTable>
+                ></CoilTable>
               </TableRow>
             )),
           )}

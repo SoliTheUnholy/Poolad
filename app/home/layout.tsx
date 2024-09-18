@@ -1,23 +1,13 @@
 "use client";
 import Link from "next/link";
-import {
-  Bell,
-  CircleUser,
-  Home,
-  LineChart,
-  Menu,
-  MessageSquare,
-  Package,
-  Package2,
-  PackagePlus,
-  PackageSearch,
-  Users,
-} from "lucide-react";
+import { Home, Menu, Package2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { usePathname, useRouter } from "next/navigation";
@@ -63,13 +53,13 @@ export default function UserLayout({
             </Link>
             <Link
               href="/home/products"
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/home/products" ? "text-lg font-bold text-black" : ""}`}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname.includes("/home/products") ? "text-lg font-bold text-black" : ""}`}
             >
               محصولات
             </Link>
             <Link
               href="/home/weblog"
-              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/home/weblog" ? "text-lg font-bold text-black" : ""}`}
+              className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname.includes("/home/weblog") ? "text-lg font-bold text-black" : ""}`}
             >
               وبلاگ
             </Link>
@@ -87,6 +77,8 @@ export default function UserLayout({
             </Link>
           </nav>
           <Sheet>
+            <SheetTitle className="sr-only"></SheetTitle>
+            <SheetDescription className="sr-only"></SheetDescription>
             <SheetTrigger asChild>
               <Button
                 variant="outline"
@@ -101,7 +93,7 @@ export default function UserLayout({
               side="right"
               className="flex flex-col overflow-y-scroll"
             >
-              <section className="mt-10 flex justify-between">
+              <div className="mt-10 flex justify-between">
                 <Link
                   href="/home"
                   className="flex items-center gap-2 font-semibold"
@@ -109,7 +101,7 @@ export default function UserLayout({
                   <Package2 className="h-6 w-6" />
                   <span>تعاونی پولاد سقف خلیج فارس</span>
                 </Link>
-              </section>
+              </div>
               <nav className="grid gap-2 text-lg font-medium">
                 <Link href="/home/">
                   <SheetClose

@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import {
   Dialog,
   DialogContent,
@@ -17,12 +16,9 @@ import {
 } from "@/components/ui/accordion";
 import Link from "next/link";
 import {
-  Bell,
-  CircleUser,
   Home,
   LineChart,
   Menu,
-  MessageSquare,
   Package,
   Package2,
   PackagePlus,
@@ -31,24 +27,11 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
+  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
@@ -138,17 +121,13 @@ export default function UserLayout({
                     </span>
                   </AccordionTrigger>
                   <AccordionContent>
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <div className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                          <PackagePlus className="h-4 w-4" />
-                          ثبت سفارش جدید
-                        </div>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <NewOrder />
-                      </DialogContent>
-                    </Dialog>
+                    <Link
+                      href="/home/products"
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderlist" ? "bg-muted text-primary" : ""}`}
+                    >
+                      <PackageSearch className="h-4 w-4" />
+                      ثبت سفارش جدید
+                    </Link>{" "}
                     <Link
                       href="/dashboard/orderslist"
                       className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderlist" ? "bg-muted text-primary" : ""}`}
@@ -204,6 +183,8 @@ export default function UserLayout({
       <div className="flex flex-col">
         <header className="flex h-[7vh] shrink-0 items-center justify-between border-b bg-muted/40 px-4 lg:h-[7vh] lg:px-6">
           <Sheet>
+            <SheetTitle className="sr-only"></SheetTitle>
+            <SheetDescription className="sr-only"></SheetDescription>
             <SheetTrigger asChild>
               <Button
                 variant="outline"
@@ -289,27 +270,14 @@ export default function UserLayout({
                       </span>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <SheetClose className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary">
-                            <PackagePlus className="h-4 w-4" />
-                            ثبت سفارش جدید
-                          </SheetClose>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>ثبت سفارش جدید</DialogTitle>
-                            <DialogDescription>
-                              Make changes to your profile here. Click save when
-                              re done.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <NewOrder></NewOrder>
-                          <DialogFooter>
-                            <Button type="submit">Save changes</Button>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
+                      <Link href="/home/products">
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderslist" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <PackageSearch className="h-4 w-4" />
+                          ثبت سفارش جدید
+                        </SheetClose>
+                      </Link>
                       <Link href="/dashboard/orderslist">
                         <SheetClose
                           className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderslist" ? "bg-muted text-primary" : ""}`}

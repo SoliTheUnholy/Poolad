@@ -1,7 +1,7 @@
 "use server";
 import { connectDB } from "@/lib/mongodb";
-import coil from "@/models/coil";
-import drawn from "@/models/drawn";
+import coil from "@/models/coils";
+import drawn from "@/models/drawns";
 import lattice from "@/models/lattices";
 
 export const availability = async (
@@ -17,7 +17,7 @@ export const availability = async (
       const Coil = JSON.parse(JSON.stringify(await coil.find(...props)));
       return Coil;
     } else if (product === 3) {
-      const Drawn = JSON.parse(JSON.stringify(drawn.find(...props)));
+      const Drawn = JSON.parse(JSON.stringify(await drawn.find(...props)));
       return Drawn;
     } else {
       return {

@@ -1,10 +1,10 @@
 "use server";
 import { connectDB } from "@/lib/mongodb";
-import coil from "@/models/coil";
-import drawn from "@/models/drawn";
+import coil from "@/models/coils";
+import drawn from "@/models/drawns";
 import lattice from "@/models/lattices";
 
-export const removeProduct = async (product: Number,id:string) => {
+export const removeProduct = async (product: Number, id: string) => {
   try {
     await connectDB();
     if (product === 1) {

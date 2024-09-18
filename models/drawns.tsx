@@ -10,7 +10,20 @@ export interface drawnDocument {
 }
 
 const drawnSchema = new Schema<drawnDocument>(
-  {},
+  {
+    diameter: {
+      type: Number,
+      required: [true, "diameter is required"],
+    },
+    ribbed: {
+      type: Boolean,
+      required: [true, "ribbed is required"],
+    },
+    price: {
+      type: Number,
+      required: [true, "price is required"],
+    },
+  },
   {
     timestamps: true,
   },

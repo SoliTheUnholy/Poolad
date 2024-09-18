@@ -1,13 +1,13 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -67,14 +67,58 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "fade-in-up": {
+          "0%": {
+            top: "20%",
+            opacity: "0%",
+          },
+          "100%": {
+            top: "0%",
+            opacity: "100%",
+          },
+        },
+        "fade-out-up": {
+          "0%": {
+            top: "0%",
+            opacity: "100%",
+          },
+          "100%": {
+            top: "-20%",
+            opacity: "0%",
+          },
+        },
+        "fade-in-left": {
+          "0%": {
+            left: "20%",
+            opacity: "0%",
+          },
+          "100%": {
+            left: "0%",
+            opacity: "100%",
+          },
+        },
+        "fade-out-left": {
+          "0%": {
+            left: "0%",
+            opacity: "100%",
+          },
+          "100%": {
+            left: "-20%",
+            opacity: "0%",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-in-left": "fade-in-left 0.5s ease-out",
+        "fade-out-left": "fade-out-left 0.5s ease-in",
+        "fade-in-up": "fade-in-up 0.5s ease-out",
+        "fade-out-up": "fade-out-up 0.5s ease-in",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

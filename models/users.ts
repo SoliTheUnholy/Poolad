@@ -1,5 +1,4 @@
 import mongoose, { Schema, model } from "mongoose";
-import { orderDocument } from "./order";
 
 export interface userDocument {
   _id: string;
@@ -9,7 +8,6 @@ export interface userDocument {
   code: string;
   address: string;
   zipCode: string;
-  orders: Array<orderDocument>;
   createdAt: Date;
   updatedAt: Date;
 }

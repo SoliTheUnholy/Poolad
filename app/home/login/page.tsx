@@ -8,12 +8,12 @@ export default function login() {
       <div className="z-10 flex h-[93vh] items-center justify-center lg:col-span-2">
          <LoginForm/>
       </div>
-      <div className="flex -mt-[800px] lg:m-0 justify-center lg:block overflow-hidden lg:col-span-3">
+      {/* <div className="flex -mt-[800px] lg:m-0 justify-center lg:block overflow-hidden lg:col-span-3">
         <Spline
           className="lg:block drop-shadow-md"
           scene="../../cube.splinecode"
         />
-      </div>
+      </div> */}
     </div>
   );
 }

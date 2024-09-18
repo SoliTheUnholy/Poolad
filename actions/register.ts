@@ -19,9 +19,7 @@ export const register = async (values: any) => {
       number,
       password: hashedPassword,
     });
-    const savedUser = await user
-      .save()
-      .then(signIn("credentials", { number, password: hashedPassword }));
+    const savedUser = await user.save()
   } catch (e: any) {
     return {
       error: "اتصال برقرار نشد.",

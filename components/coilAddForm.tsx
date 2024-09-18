@@ -1,12 +1,10 @@
 "use client";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { cn } from "@/lib/utils";
-import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -32,11 +30,18 @@ import {
 } from "@/components/ui/popover";
 import { toast } from "sonner";
 import { ArrowRightIcon } from "lucide-react";
-import { Input } from "./ui/input";
-import { useState } from "react";
-import { Separator } from "./ui/separator";
+import { Input } from "@/components/ui/input";
+import { coilAdd } from "@/actions/coilAdd";
+import { useRouter } from "next/navigation";
 
-const diameter = [
+const producers = [
+  { label: "گلستان", value: "گلستان" },
+  { label: "یزد", value: "یزد" },
+  { label: "کرمان", value: "کرمان" },
+  { label: "شیراز", value: "شیراز" },
+] as const;
+
+const diameters = [
   { label: "5.5", value: "5.5" },
   { label: "6.5", value: "6.5" },
   { label: "8", value: "8" },
@@ -44,12 +49,12 @@ const diameter = [
   { label: "12", value: "12" },
 ] as const;
 
-const ribbed = [
-  { label: "آجدار", value: "true" },
-  { label: "ساده", value: "false" },
+const ribs = [
+  { label: "آجدار", value: true },
+  { label: "ساده", value: false },
 ] as const;
 
-const type = [
+const types = [
   { label: "AII", value: "AII" },
   { label: "AIII", value: "AIII" },
   { label: "3SP", value: "3SP" },
@@ -59,48 +64,58 @@ const type = [
 ] as const;
 
 const FormSchema = z.object({
-  diameter: z.string({
+  diameters: z.string({
     required_error: "قطر را انتخاب کنید",
   }),
-  ribbed: z.string({
+  ribs: z.boolean({
     required_error: " آجدار بودن را انتخاب کنید",
   }),
-  type: z.string({
+  types: z.string({
     required_error: "نوع کلاف را انتخاب کنید",
   }),
-  weight: z.string({
+  producers: z.string({
+    required_error: "تولید کننده را وارد کنید",
+  }),
+  price: z.string({
     required_error: "مقدار را وارد کنید",
   }),
 });
 
-const promise = () =>
-  new Promise((resolve) => setTimeout(() => resolve({ name: "Sonner" }), 2000));
-export function CoilForm() {
-  const [price, setPrice] = useState(0);
+export default function DrawnAddForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
-
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast.promise(promise, {
+  async function onSubmit(values: z.infer<typeof FormSchema>) {
+    const r = new Promise((resolve) =>
+      resolve(
+        coilAdd({
+          diameter: Number(values.diameters),
+          type: values.types,
+          ribbed: values.ribs,
+          producer: values.producers,
+          price: Number(values.price),
+        }),
+      ),
+    );
+    toast.promise(r, {
       loading: "در حال ثبت ...",
       success: () => {
-        return "سفارش شما ثبت شد";
+        return "محصول ثبت شد";
       },
       error: "ناموفق",
     });
+    router.refresh();
   }
-
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex min-h-[85svh] w-full flex-col justify-between gap-4 p-8"
+        className="grid grid-cols-1 grid-rows-6 items-start justify-center p-8 lg:grid-cols-6 lg:grid-rows-1 lg:pb-0"
       >
-        <Separator className="block sm:hidden" />
         <FormField
           control={form.control}
-          name="diameter"
+          name="diameters"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>قطر</FormLabel>
@@ -111,38 +126,38 @@ export function CoilForm() {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "min-w-28 justify-between lg:rounded-l-none",
                         !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
-                        ? diameter.find(
-                            (diameter) => diameter.value === field.value,
+                        ? diameters.find(
+                            (diameters) => diameters.value === field.value,
                           )?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-28 p-0">
                   <Command>
                     <CommandInput placeholder="جستجو" className="h-9" />
                     <CommandList>
                       <CommandEmpty>محصول موجود نیست</CommandEmpty>
                       <CommandGroup>
-                        {diameter.map((diameter) => (
+                        {diameters.map((diameters) => (
                           <CommandItem
-                            value={diameter.label}
-                            key={diameter.value}
+                            value={diameters.label}
+                            key={diameters.value}
                             onSelect={() => {
-                              form.setValue("diameter", diameter.value);
+                              form.setValue("diameters", diameters.value);
                             }}
                           >
-                            {diameter.label}
+                            {diameters.label}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                diameter.value === field.value
+                                diameters.value === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -159,71 +174,9 @@ export function CoilForm() {
             </FormItem>
           )}
         />
-        <Separator />
         <FormField
           control={form.control}
-          name="ribbed"
-          render={({ field }) => (
-            <FormItem className="flex flex-col">
-              <FormLabel>آجدار</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      role="combobox"
-                      className={cn(
-                        "w-[200px] justify-between",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      {field.value
-                        ? ribbed.find((ribbed) => ribbed.value === field.value)
-                            ?.label
-                        : "انتخاب کنید"}
-                      <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
-                  <Command>
-                    <CommandInput placeholder="جستجو" className="h-9" />
-                    <CommandList>
-                      <CommandEmpty>محصول موجود نیست</CommandEmpty>
-                      <CommandGroup>
-                        {ribbed.map((ribbed) => (
-                          <CommandItem
-                            value={ribbed.label}
-                            key={ribbed.value}
-                            onSelect={() => {
-                              form.setValue("ribbed", ribbed.value);
-                            }}
-                          >
-                            {ribbed.label}
-                            <CheckIcon
-                              className={cn(
-                                "ml-auto h-4 w-4",
-                                ribbed.value === field.value
-                                  ? "opacity-100"
-                                  : "opacity-0",
-                              )}
-                            />
-                          </CommandItem>
-                        ))}
-                      </CommandGroup>
-                    </CommandList>
-                  </Command>
-                </PopoverContent>
-              </Popover>
-              <FormDescription>آجدار</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Separator />
-        <FormField
-          control={form.control}
-          name="type"
+          name="types"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>نوع</FormLabel>
@@ -234,36 +187,37 @@ export function CoilForm() {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "min-w-28 justify-between lg:rounded-none",
                         !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
-                        ? type.find((type) => type.value === field.value)?.label
+                        ? types.find((types) => types.value === field.value)
+                            ?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="min-w-28 p-0">
                   <Command>
                     <CommandInput placeholder="جستجو" className="h-9" />
                     <CommandList>
                       <CommandEmpty>محصول موجود نیست</CommandEmpty>
                       <CommandGroup>
-                        {type.map((type) => (
+                        {types.map((types) => (
                           <CommandItem
-                            value={type.label}
-                            key={type.value}
+                            value={types.label}
+                            key={types.value}
                             onSelect={() => {
-                              form.setValue("type", type.value);
+                              form.setValue("types", types.value);
                             }}
                           >
-                            {type.label}
+                            {types.label}
                             <CheckIcon
                               className={cn(
                                 "ml-auto h-4 w-4",
-                                type.value === field.value
+                                types.value === field.value
                                   ? "opacity-100"
                                   : "opacity-0",
                               )}
@@ -282,38 +236,146 @@ export function CoilForm() {
         />
         <FormField
           control={form.control}
-          name="weight"
+          name="ribs"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>مقدار</FormLabel>
+            <FormItem className="flex flex-col">
+              <FormLabel>آجدار</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "min-w-28 justify-between lg:rounded-none",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {(field.value === true) || field.value === false
+                        ? ribs.find((ribs) => ribs.value === field.value)?.label
+                        : "انتخاب کنید"}
+                      <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="min-w-28 p-0">
+                  <Command>
+                    <CommandInput placeholder="جستجو" className="h-9" />
+                    <CommandList>
+                      <CommandEmpty>محصول موجود نیست</CommandEmpty>
+                      <CommandGroup>
+                        {ribs.map((ribs) => (
+                          <CommandItem
+                            value={ribs.label}
+                            key={String(ribs.value)}
+                            onSelect={() => {
+                              form.setValue("ribs", ribs.value);
+                            }}
+                          >
+                            {ribs.label}
+                            <CheckIcon
+                              className={cn(
+                                "ml-auto h-4 w-4",
+                                ribs.value === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <FormDescription>آجدار بودن کلاف</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="producers"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>تولید کننده</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      role="combobox"
+                      className={cn(
+                        "min-w-28 justify-between lg:rounded-none",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {field.value
+                        ? producers.find(
+                            (producers) => producers.value === field.value,
+                          )?.label
+                        : "انتخاب کنید"}
+                      <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="min-w-28 p-0">
+                  <Command>
+                    <CommandInput placeholder="جستجو" className="h-9" />
+                    <CommandList>
+                      <CommandEmpty>محصول موجود نیست</CommandEmpty>
+                      <CommandGroup>
+                        {producers.map((producers) => (
+                          <CommandItem
+                            value={producers.label}
+                            key={producers.value}
+                            onSelect={() => {
+                              form.setValue("producers", producers.value);
+                            }}
+                          >
+                            {producers.label}
+                            <CheckIcon
+                              className={cn(
+                                "ml-auto h-4 w-4",
+                                producers.value === field.value
+                                  ? "opacity-100"
+                                  : "opacity-0",
+                              )}
+                            />
+                          </CommandItem>
+                        ))}
+                      </CommandGroup>
+                    </CommandList>
+                  </Command>
+                </PopoverContent>
+              </Popover>
+              <FormDescription>تولید کننده را انتخاب کنید</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="price"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>قیمت</FormLabel>
               <FormControl>
                 <Input
-                  onChangeCapture={() => setPrice(Number(field.value))}
-                  onKeyUp={() => setPrice(Number(field.value))}
+                  className="min-w-28 lg:rounded-none"
                   type="number"
                   placeholder=""
                   {...field}
                 />
               </FormControl>
-              <FormDescription>مقدار مورد نظر (کیلوگرم) </FormDescription>
+              <FormDescription>قیمت مورد نظر (تومان) </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Separator />
-        <FormField
-          name="price"
-          render={() => (
-            <FormItem>
-              <FormLabel>{(price * 25000).toString()}</FormLabel>
-              <FormDescription>قیمت محاسبه شده </FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit" className="mt-auto w-min">
+        <Button type="submit" className="mt-[22px] min-w-28 lg:rounded-r-none">
           <ArrowRightIcon />
-          فاکتور
+          افزودن
         </Button>
       </form>
     </Form>
