@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { signIn } from "next-auth/react";
 
 export default function RegisterForm() {
   const [error, setError] = useState<string>();
@@ -36,11 +37,16 @@ export default function RegisterForm() {
       setError(r.error);
       return;
     } else {
-      return router.push("/home/login");
+      const res = await signIn("credentials", {
+        number: formData.get("number"),
+        password: formData.get("password"),
+        redirect: false,
+      });
+      return router.push("/home/register/info");
     }
   };
   return (
-    <Card className="absolute z-10 w-[90vw] max-w-fit">
+    <Card className="absolute z-10 w-[90vw] max-w-fit border-none bg-muted">
       <CardHeader>
         <CardTitle className="text-xl">ساخت حساب کاربری</CardTitle>
         <CardDescription>
@@ -48,7 +54,7 @@ export default function RegisterForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form className="grid sm:w-80 gap-4" ref={ref} action={handleSubmit}>
+        <form className="grid gap-4 sm:w-80" ref={ref} action={handleSubmit}>
           {error && (
             <div className="text-center text-sm font-medium text-red-500">
               {error}

@@ -1,14 +1,5 @@
 "use client";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import {
   Accordion,
   AccordionContent,
   AccordionItem,
@@ -25,6 +16,7 @@ import {
   PackageSearch,
   Users,
 } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -36,8 +28,10 @@ import {
 } from "@/components/ui/sheet";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
-import NewOrder from "@/components/neworder";
 import { useRouter } from "next/navigation";
+import { SwitchTheme } from "@/components/modeToggle";
+import { Separator } from "@radix-ui/react-separator";
+import { useTheme } from "next-themes";
 
 export default function UserLayout({
   children,
@@ -47,9 +41,10 @@ export default function UserLayout({
   const session = useSession();
   const pathname = usePathname();
   const router = useRouter();
-  // if (session.status !== "authenticated") {
-  //   router.push("/home");
-  // }
+  if (session.status === "unauthenticated") {
+    router.push("/home");
+  }
+  const { theme } = useTheme();
   const options = { year: "numeric", month: "long", day: "numeric" };
   const Today = new Date().toLocaleDateString("fa-IR", options as any);
   return (
@@ -58,7 +53,13 @@ export default function UserLayout({
         <div className="flex flex-col">
           <div className="flex h-[7vh] items-center border-b px-4 lg:h-[7vh] lg:px-6">
             <Link href="/" className="flex items-center gap-2 font-semibold">
-              <Package2 className="h-6 w-6" />
+              <Image
+                className="h-10 w-10 dark:invert"
+                height={24}
+                width={24}
+                src={"/logo.png"}
+                alt={""}
+              />{" "}
               <span className="">تعاونی پولاد سقف </span>
             </Link>
           </div>
@@ -204,7 +205,13 @@ export default function UserLayout({
                   href="/"
                   className="flex items-center gap-2 font-semibold"
                 >
-                  <Package2 className="h-6 w-6" />
+                  <Image
+                    className="h-10 w-10 dark:invert"
+                    height={24}
+                    width={24}
+                    src={"/logo.png"}
+                    alt={""}
+                  />{" "}
                   <span className=""> تعاونی پولاد سقف</span>
                 </Link>
               </section>
@@ -343,15 +350,21 @@ export default function UserLayout({
               </nav>
             </SheetContent>
           </Sheet>
-          <span className="text-sm text-muted-foreground">{Today}</span>
-          <div>
+          <span className="mr-4 hidden text-sm text-muted-foreground sm:block">
+            {Today}
+          </span>
+          <div className="mr-auto flex gap-2">
             <Link href={"/home"}>
               <Button>بازگشت به سایت</Button>
             </Link>
+            <Separator className="h-10" orientation="vertical" />
+            <SwitchTheme />
           </div>
         </header>
         <section className="relative">
-          <div className="fixed -z-50 h-screen w-screen bg-[url('/pattern2.png')] bg-repeat opacity-25"></div>
+          <div
+            className={`fixed -z-50 h-screen w-screen bg-[url('/pattern2.png')] ${theme === "dark" && "invert"} bg-repeat opacity-25`}
+          ></div>
           <section className="absolute flex h-[93vh] w-full flex-col gap-4 overflow-x-hidden overflow-y-scroll p-4 lg:gap-8 lg:p-8">
             {children}
           </section>

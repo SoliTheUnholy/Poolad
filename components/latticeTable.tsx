@@ -5,7 +5,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { removeProduct } from "@/actions/removeProduct";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function LatticeTable(props: {
   id: string;
@@ -14,6 +14,7 @@ export default function LatticeTable(props: {
   bottom: any;
   price: any;
 }) {
+  const pathname = usePathname()
   const router = useRouter()
   return (
     <>
@@ -21,7 +22,7 @@ export default function LatticeTable(props: {
       <TableCell>{props.top}</TableCell>
       <TableCell>{props.bottom}</TableCell>
       <TableCell className="text-right">{props.price}</TableCell>
-      <TableCell>
+      <TableCell className={`${!pathname.includes("dashboard") && "hidden"}`}>
         <Button
           onClick={() => {
             removeProduct(1, props.id), router.refresh();

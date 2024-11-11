@@ -3,10 +3,11 @@ import mongoose, { Schema, model } from "mongoose";
 export interface orderDocument {
   _id: string;
   userId: string;
-  productId: string;
+  productInfo: object;
   weight: number;
   price: number;
   type: number;
+  status: "rejected" | "pending" | "resolved";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -17,10 +18,7 @@ const orderSchema = new Schema<orderDocument>(
       type: String,
       required: [true, "userId is required"],
     },
-    productId: {
-      type: String,
-      required: [true, "productId is required"],
-    },
+    productInfo: { type: Object, required: [true, "userId is required"] },
     weight: {
       type: Number,
       required: [true, "weight is required"],
@@ -32,6 +30,10 @@ const orderSchema = new Schema<orderDocument>(
     price: {
       type: Number,
       required: [true, "price is required"],
+    },
+    status: {
+      type: String,
+      required: [true, "status is required"],
     },
   },
   {

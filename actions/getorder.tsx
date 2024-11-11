@@ -5,7 +5,9 @@ import order from "@/models/orders";
 export const getOrder = async (props: [object, object]) => {
   try {
     await connectDB();
-    const orders = JSON.parse(JSON.stringify(await order.find(...props)));
+    const orders = JSON.parse(
+      JSON.stringify(await order.find(...props).sort({ _id: -1 })),
+    );
     return orders;
   } catch (e: any) {
     return {

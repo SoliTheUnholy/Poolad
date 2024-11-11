@@ -7,7 +7,7 @@ export default function Layout({
 }>) {
   return (
     <Container>
-      <div className="h-auto min-h-[85svh] rounded-xl bg-muted transition-all duration-500 ease-in">
+      <div className="h-auto rounded-xl bg-muted transition-all duration-500 ease-in">
         {children}
       </div>
     </Container>

@@ -3,7 +3,7 @@ import { TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { ArrowRightIcon } from "lucide-react";
 import { removeProduct } from "@/actions/removeProduct";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function DrawnTable(props: {
   id: string;
@@ -11,13 +11,14 @@ export default function DrawnTable(props: {
   ribbed: boolean;
   price: number;
 }) {
+  const pathname = usePathname()
   const router = useRouter();
   return (
     <>
       <TableCell>{props.diameter}</TableCell>
       <TableCell>{props.ribbed ? "آجدار" : "ساده"}</TableCell>
       <TableCell className="text-right">{props.price}</TableCell>
-      <TableCell>
+      <TableCell className={`${!pathname.includes("dashboard") && "hidden"}`}>
         <Button
           onClick={() => {
             removeProduct(3, props.id), router.refresh();

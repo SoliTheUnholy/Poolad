@@ -11,13 +11,19 @@ export const availability = async (
   try {
     await connectDB();
     if (product === 1) {
-      const Lattice = JSON.parse(JSON.stringify(await lattice.find(...props)));
+      const Lattice = JSON.parse(
+        JSON.stringify(await lattice.find(...props).sort({ _id: -1 })),
+      );
       return Lattice;
     } else if (product === 2) {
-      const Coil = JSON.parse(JSON.stringify(await coil.find(...props)));
+      const Coil = JSON.parse(
+        JSON.stringify(await coil.find(...props).sort({ _id: -1 })),
+      );
       return Coil;
     } else if (product === 3) {
-      const Drawn = JSON.parse(JSON.stringify(await drawn.find(...props)));
+      const Drawn = JSON.parse(
+        JSON.stringify(await drawn.find(...props).sort({ _id: -1 })),
+      );
       return Drawn;
     } else {
       return {

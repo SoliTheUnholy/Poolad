@@ -37,7 +37,7 @@ export default function LoginForm() {
     }
   };
   return (
-    <Card className="w-[90vw] max-w-fit">
+    <Card className="w-[90vw] bg-muted border-none max-w-fit">
       <CardHeader>
         <CardTitle className="text-xl">ورود به حساب</CardTitle>
         <CardDescription>
