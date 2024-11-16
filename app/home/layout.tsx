@@ -43,7 +43,6 @@ export default function UserLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { theme } = useTheme();
-  console.log(data);
   const handleLogin = () => {
     if (status === "authenticated") {
       router.push("/dashboard");
@@ -56,6 +55,11 @@ export default function UserLayout({
   return (
     <>
       <div className="flex min-h-screen w-full flex-col">
+        <Link className="fixed end-0 top-40 z-50" href={"/home/contact"}>
+          <Button className="h-fit w-min self-center rounded-l-none bg-primary px-2 text-base [writing-mode:vertical-lr]">
+            <span>ارتباط با ما</span>
+          </Button>
+        </Link>
         <header className="sticky top-0 z-50 flex h-16 items-center justify-between gap-4 bg-muted px-4 md:px-6">
           <nav className="hidden flex-col gap-3 text-lg font-medium md:flex md:flex-row md:items-center md:gap-4 md:text-sm lg:gap-5">
             <Link
@@ -186,10 +190,10 @@ export default function UserLayout({
             <div className="flex flex-row items-center gap-2">
               <DropdownMenu dir="rtl">
                 <DropdownMenuTrigger>
-                  <Button className="flex flex-row gap-2 rounded-full">
+                  <div className="flex flex-row gap-2 rounded-full bg-primary p-2 px-4">
                     <CircleUser className="h-6 w-6" />
                     <span>{data.user?.name}</span>
-                  </Button>
+                  </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuLabel>خوش آمدید !</DropdownMenuLabel>
@@ -337,7 +341,7 @@ export default function UserLayout({
                       className="h-6 w-6"
                       fillRule="evenodd"
                       clipRule="evenodd"
-                      stroke-linejoin="round"
+                      strokeLinejoin="round"
                     >
                       <path
                         id="telegram-1"
