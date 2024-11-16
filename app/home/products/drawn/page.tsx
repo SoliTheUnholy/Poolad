@@ -66,19 +66,21 @@ export default function DrawnForm() {
   const products = async () => {
     const { diameter, ribbed } = form.getValues();
     availability(3, [{ diameter, ribbed }, {}]).then((data: any) => {
-      setD([]);
-      setR([]);
-      data.map((pro: any) => {
-        setD((prev) => [...prev, pro.diameter]);
-        setR((prev) => [...prev, pro.ribbed]);
-      });
-      if (Object.keys(data).length == 1) {
-        form.setValue("diameter", data[0].diameter);
-        form.setValue("ribbed", data[0].ribbed);
-        setPrice(data[0].price);
-        setid(data[0]._id);
-      } else {
-        setPrice(0);
+      if (data) {
+        setD([]);
+        setR([]);
+        data.map((pro: any) => {
+          setD((prev) => [...prev, pro.diameter]);
+          setR((prev) => [...prev, pro.ribbed]);
+        });
+        if (Object.keys(data).length == 1) {
+          form.setValue("diameter", data[0].diameter);
+          form.setValue("ribbed", data[0].ribbed);
+          setPrice(data[0].price);
+          setid(data[0]._id);
+        } else {
+          setPrice(0);
+        }
       }
     });
   };

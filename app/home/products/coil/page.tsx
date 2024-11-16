@@ -75,25 +75,27 @@ export default function CoilForm() {
     const { diameter, ribbed, type, producer } = form.getValues();
     availability(2, [{ diameter, ribbed, type, producer }, {}]).then(
       (data: any) => {
-        setD([]);
-        setT([]);
-        setP([]);
-        setR([]);
-        data.map((pro: any) => {
-          setD((prev) => [...prev, pro.diameter]);
-          setT((prev) => [...prev, pro.type]);
-          setP((prev) => [...prev, pro.producer]);
-          setR((prev) => [...prev, pro.ribbed]);
-        });
-        if (Object.keys(data).length == 1) {
-          form.setValue("diameter", data[0].diameter);
-          form.setValue("type", data[0].type);
-          form.setValue("producer", data[0].producer);
-          form.setValue("ribbed", data[0].ribbed);
-          setPrice(data[0].price);
-          setid(data[0]._id);
-        } else {
-          setPrice(0);
+        if (data) {
+          setD([]);
+          setT([]);
+          setP([]);
+          setR([]);
+          data.map((pro: any) => {
+            setD((prev) => [...prev, pro.diameter]);
+            setT((prev) => [...prev, pro.type]);
+            setP((prev) => [...prev, pro.producer]);
+            setR((prev) => [...prev, pro.ribbed]);
+          });
+          if (Object.keys(data).length == 1) {
+            form.setValue("diameter", data[0].diameter);
+            form.setValue("type", data[0].type);
+            form.setValue("producer", data[0].producer);
+            form.setValue("ribbed", data[0].ribbed);
+            setPrice(data[0].price);
+            setid(data[0]._id);
+          } else {
+            setPrice(0);
+          }
         }
       },
     );
@@ -344,8 +346,9 @@ export default function CoilForm() {
                           )}
                         >
                           {field.value === true || field.value === false
-                            ? ribbed.find((ribbed) => ribbed.value === field.value)
-                                ?.label
+                            ? ribbed.find(
+                                (ribbed) => ribbed.value === field.value,
+                              )?.label
                             : "انتخاب کنید"}
                           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>

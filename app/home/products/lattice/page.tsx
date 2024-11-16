@@ -80,22 +80,24 @@ export default function LatticeForm() {
   const products = async () => {
     const { height, top, bottom } = form.getValues();
     availability(1, [{ height, top, bottom }, {}]).then((data: any) => {
-      setH([]);
-      setT([]);
-      setB([]);
-      data.map((pro: any) => {
-        setH((prev) => [...prev, pro.height]);
-        setT((prev) => [...prev, pro.top]);
-        setB((prev) => [...prev, pro.bottom]);
-      });
-      if (Object.keys(data).length == 1) {
-        form.setValue("height", data[0].height);
-        form.setValue("top", data[0].top);
-        form.setValue("bottom", data[0].bottom);
-        setPrice(data[0].price);
-        setid(data[0]._id);
-      } else {
-        setPrice(0);
+      if (data) {
+        setH([]);
+        setT([]);
+        setB([]);
+        data.map((pro: any) => {
+          setH((prev) => [...prev, pro.height]);
+          setT((prev) => [...prev, pro.top]);
+          setB((prev) => [...prev, pro.bottom]);
+        });
+        if (Object.keys(data).length == 1) {
+          form.setValue("height", data[0].height);
+          form.setValue("top", data[0].top);
+          form.setValue("bottom", data[0].bottom);
+          setPrice(data[0].price);
+          setid(data[0]._id);
+        } else {
+          setPrice(0);
+        }
       }
     });
   };
