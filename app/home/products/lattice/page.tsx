@@ -67,6 +67,16 @@ export default function LatticeForm() {
   const [availableHeights, setH] = useState<number[]>([]);
   const [availableTops, setT] = useState<number[]>([]);
   const [availableBottoms, setB] = useState<number[]>([]);
+  useEffect(() => {});
+  const discount = () => {
+    if (weight < 2000) {
+      return 0;
+    } else if (weight < 10000) {
+      return 100 * weight;
+    } else {
+      return 2 * 100 * weight;
+    }
+  };
   const products = async () => {
     const { height, top, bottom } = form.getValues();
     availability(1, [{ height, top, bottom }, {}]).then((data: any) => {
@@ -390,7 +400,9 @@ export default function LatticeForm() {
             </FormItem>
             <Separator />
             <FormItem>
-              <FormLabel>{(weight * price).toLocaleString()}</FormLabel>
+              <FormLabel>
+                {(weight * price - discount()).toLocaleString()}
+              </FormLabel>
               <FormDescription>قیمت محاسبه شده (تومان)</FormDescription>
               <FormMessage />
             </FormItem>

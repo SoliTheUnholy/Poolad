@@ -3,7 +3,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,6 +32,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { latticeAdd } from "@/actions/latticeAdd";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const heights = [
   { label: "پله", value: "15" },
@@ -70,7 +70,11 @@ const FormSchema = z.object({
 });
 
 export default function LatticeAddForm() {
+  const { data } = useSession();
   const router = useRouter();
+  if (data?.user.role === "user") {
+    router.push("/dashboard/orderslist");
+  }
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });

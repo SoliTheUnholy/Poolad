@@ -33,27 +33,26 @@ import { ArrowRightIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { drawnAdd } from "@/actions/drawnAdd";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-
-  const diameters = [
-    { label: "4", value: "4" },
-    { label: "4.2", value: "4.2" },
-    { label: "4.4", value: "4.4" },
-    { label: "4.6", value: "4.6" },
-    { label: "4.7", value: "4.7" },
-    { label: "5", value: "5" },
-    { label: "5.5", value: "5.5" },
-    { label: "6", value: "6" },
-    { label: "8", value: "8" },
-    { label: "10", value: "10" },
-    { label: "12", value: "12" },
-  ] as const;
+const diameters = [
+  { label: "4", value: "4" },
+  { label: "4.2", value: "4.2" },
+  { label: "4.4", value: "4.4" },
+  { label: "4.6", value: "4.6" },
+  { label: "4.7", value: "4.7" },
+  { label: "5", value: "5" },
+  { label: "5.5", value: "5.5" },
+  { label: "6", value: "6" },
+  { label: "8", value: "8" },
+  { label: "10", value: "10" },
+  { label: "12", value: "12" },
+] as const;
 
 const ribs = [
   { label: "آجدار", value: true },
   { label: "ساده", value: false },
 ] as const;
-
 
 const FormSchema = z.object({
   diameters: z.string({
@@ -68,7 +67,11 @@ const FormSchema = z.object({
 });
 
 export default function CoilAddForm() {
+  const { data } = useSession();
   const router = useRouter();
+  if (data?.user.role === "user") {
+    router.push("/dashboard/orderslist");
+  }
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -175,7 +178,7 @@ export default function CoilAddForm() {
                         !field.value && "text-muted-foreground",
                       )}
                     >
-                      {(field.value === true) || field.value === false
+                      {field.value === true || field.value === false
                         ? ribs.find((ribs) => ribs.value === field.value)?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />

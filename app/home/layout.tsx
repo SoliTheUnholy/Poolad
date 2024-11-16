@@ -43,6 +43,7 @@ export default function UserLayout({
   const router = useRouter();
   const pathname = usePathname();
   const { theme } = useTheme();
+  console.log(data);
   const handleLogin = () => {
     if (status === "authenticated") {
       router.push("/dashboard");
@@ -191,9 +192,7 @@ export default function UserLayout({
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>
-                    خوش آمدید !
-                  </DropdownMenuLabel>
+                  <DropdownMenuLabel>خوش آمدید !</DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
                   <DropdownMenuItem

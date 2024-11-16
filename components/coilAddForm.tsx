@@ -33,6 +33,7 @@ import { ArrowRightIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { coilAdd } from "@/actions/coilAdd";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const producers = [
   { label: "گلستان", value: "گلستان" },
@@ -82,7 +83,11 @@ const FormSchema = z.object({
 });
 
 export default function DrawnAddForm() {
+  const { data } = useSession();
   const router = useRouter();
+  if (data?.user.role === "user") {
+    router.push("/dashboard/orderslist");
+  }
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   });
@@ -251,7 +256,7 @@ export default function DrawnAddForm() {
                         !field.value && "text-muted-foreground",
                       )}
                     >
-                      {(field.value === true) || field.value === false
+                      {field.value === true || field.value === false
                         ? ribs.find((ribs) => ribs.value === field.value)?.label
                         : "انتخاب کنید"}
                       <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />

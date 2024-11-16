@@ -25,12 +25,26 @@ export default function SummeryPage({ params }: { params: { id: string } }) {
   const [p, setp] = useState(0);
   const [type, setType] = useState(0);
   const [array, setArray] = useState({});
+  const discount = (weight: number, type: number) => {
+    if (type === 1) {
+      if (weight < 2000) {
+        return 0;
+      } else if (weight < 10000) {
+        return 100 * weight;
+      } else {
+        return 2 * 100 * weight;
+      }
+    }
+    return 0;
+  };
   useEffect(() => {
     getOrder([{ _id: params.id }, {}]).then((data) => {
       setw(data[0].weight);
       setType(data[0].type);
       setArray(data[0].productInfo);
-      setp(data[0].weight * data[0].price);
+      setp(
+        data[0].weight * data[0].price - discount(data[0].weight, data[0].type),
+      );
     });
   }, []);
   return (

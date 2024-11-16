@@ -1,13 +1,26 @@
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/users";
-import type { DefaultSession, NextAuthOptions } from "next-auth";
+import type { DefaultSession, DefaultUser, NextAuthOptions } from "next-auth";
 import credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import { DefaultJWT } from "next-auth/jwt";
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
+      role: string;
+      name: string;
     } & DefaultSession["user"];
+  }
+  interface User extends DefaultUser {
+    role: string;
+    name: string;
+  }
+}
+declare module "next-auth/jwt" {
+  interface JWT extends DefaultJWT {
+    role: string;
+    name: string;
   }
 }
 export const authOptions: NextAuthOptions = {
@@ -26,7 +39,6 @@ export const authOptions: NextAuthOptions = {
           number: credentials?.number,
         }).select("+password");
         if (!user) throw new Error("Wrong phonenumber or password");
-
         const passwordMatch = await bcrypt.compare(
           credentials!.password,
           user.password,
@@ -40,12 +52,16 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }) => {
       if (session?.user) {
         session.user.id = token.sub ?? "";
+        session.user.role = token.role;
+        session.user.name = token.name;
       }
       return session;
     },
     jwt: async ({ user, token }) => {
       if (user) {
         token.uid = user.id;
+        token.role = user.role;
+        token.name = user.name;
       }
       return token;
     },
