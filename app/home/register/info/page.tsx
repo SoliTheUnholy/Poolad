@@ -22,6 +22,7 @@ export default function Info() {
   const session = useSession();
   const router = useRouter();
 
+  
   const handleSubmit = async (formData: FormData) => {
     const r = await updateUserInfo({
       id: session.data?.user.id,
