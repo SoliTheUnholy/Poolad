@@ -35,7 +35,7 @@ export default function Info() {
   };
   return (
     <div className="relative flex h-[93vh] w-full items-center justify-center overflow-hidden">
-      <Card className="min-w-96 border-none bg-muted">
+      <Card className="min-w-80 border-none bg-muted">
         <form ref={ref} action={handleSubmit}>
           <CardHeader>
             <CardTitle>مشخصات</CardTitle>

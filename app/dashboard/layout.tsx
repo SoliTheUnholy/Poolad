@@ -226,7 +226,7 @@ export default function UserLayout({
               <nav className="grid gap-2 text-lg font-medium">
                 <Link href="/dashboard">
                   <SheetClose
-                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard" ? "bg-muted text-primary" : ""}`}
+                    className={`flex ${session.data?.user.role === "user" && "hidden"} w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard" ? "bg-muted text-primary" : ""}`}
                   >
                     <Home className="h-4 w-4" />
                     داشبورد
@@ -235,7 +235,7 @@ export default function UserLayout({
                 <Accordion
                   type="single"
                   collapsible
-                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
+                  className={`flex ${session.data?.user.role === "user" && "hidden"} items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
                 >
                   <AccordionItem value="item-1" className="w-full">
                     <AccordionTrigger>
@@ -287,7 +287,7 @@ export default function UserLayout({
                     <AccordionContent>
                       <Link href="/home/products">
                         <SheetClose
-                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/orderslist" ? "bg-muted text-primary" : ""}`}
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary`}
                         >
                           <PackageSearch className="h-4 w-4" />
                           ثبت سفارش جدید
@@ -299,14 +299,6 @@ export default function UserLayout({
                         >
                           <PackageSearch className="h-4 w-4" />
                           لیست سفارشات
-                        </SheetClose>
-                      </Link>
-                      <Link href="/dashboard/files">
-                        <SheetClose
-                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/files" ? "bg-muted text-primary" : ""}`}
-                        >
-                          <Package className="h-4 w-4" />
-                          مدیریت فایلها
                         </SheetClose>
                       </Link>
                     </AccordionContent>
@@ -325,11 +317,22 @@ export default function UserLayout({
                       </span>
                     </AccordionTrigger>
                     <AccordionContent>
+                      <Link
+                        className={`${session.data?.user.role === "user" && "hidden"}`}
+                        href="/dashboard/userslist"
+                      >
+                        <SheetClose
+                          className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/userslist" ? "bg-muted text-primary" : ""}`}
+                        >
+                          <Users className="h-4 w-4" />
+                          لیست کاربران
+                        </SheetClose>
+                      </Link>
                       <Link href="/dashboard/changeinfo">
                         <SheetClose
                           className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary ${pathname === "/dashboard/changeinfo" ? "bg-muted text-primary" : ""}`}
                         >
-                          <Users className="h-4 w-4" />
+                          <UserRoundCog className="h-4 w-4" />
                           تغییر مشخصات اکانت
                         </SheetClose>
                       </Link>
